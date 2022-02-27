@@ -2,13 +2,13 @@
    <form>
       <div class="group_col">
          <p class="title_name">Метод Монте-Карло</p>
-         <formInput :labelText="'Вид целевой функции'" :labelId="lab" v-model:value="functionString"/>
+         <formInput v-model:value="functionString" :labelText="'Вид целевой функции'"/>
          <div class="group_row_between">
-            <formInput :labelText="'Число генерируемых точек'" :labelId="'lab1'" :inputValue="100"/>
-            <formInput :labelText="'Количество переменных'" :labelId="lab2" :inputValue="2"/>
-            <formRangeInput :minVal="0" :maxVal="20"/>
+            <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'"/>
+            <formInput v-model:value="countVariable" :labelText="'Количество переменных'"/>
+            <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="20" :step="1" :id="'range1'"/>
          </div>
-         <formSwitch :labelText="'Добавить метод для дополнительного поиска'"/>
+         <formSwitch v-model:value="switchOn" :labelText="'Добавить метод для дополнительного поиска'"/>
          <formDropDownList :listName="methodsName" :id="'listid'"/>
          <div class="group_row_right">
             <formButton :buttonText="'Рассчитать'" @click="funcClick"/>
@@ -39,12 +39,16 @@ export default{
             {value: 'Монте-Карло', item: 1},
             {value: 'Имитация отжига', item: 2}
          ],
-         functionString: ''
+         functionString: '',
+         countPoint: 100,
+         countVariable: 2,
+         valuePrecision: 3,
+         switchOn: ''
       }
    },
    methods: {
       funcClick() {
-         console.log(this.functionString)
+         console.log(this.switchOn)
       },
       funcValidNumber(value) {
          let res = '/^[/d]$/';

@@ -12,15 +12,30 @@ export default {
    name: "formRangeInput",
    props: {
       minVal: { type: Number },
-      maxVal: { type: Number }
+      maxVal: { type: Number },
+      step: { 
+         type: Number,
+         default: 1       
+      },
+      value: { type: Number }
    },
+   emits: ['update:value'],
    data() {
       return {
-         valueInput: Math.round((this.maxVal - this.minVal + 1) * 0.25, 0)
+         valueInput: this.value
       }
+   },
+   mounted() {
+      this.CalcPercent(this.valueInput)
    },
    watch: {
       valueInput: function(value) {
+         this.CalcPercent(value)
+         this.$emit('update:value', this.valueInput)
+      }
+   },
+   methods: {
+      CalcPercent(value) {
          let val = Math.round((value * 100.0) / (this.maxVal - this.minVal + 1), 0);
          document.getElementById("range").style.background = '-webkit-linear-gradient(left, #fa7014 0%, #fa7014 '+val+'%, #fff '+val+'%, #fff 100%)'
       }
