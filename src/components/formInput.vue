@@ -1,8 +1,8 @@
 <template>
    <div>
       <div class="group_rows">
-         <input v-model="value" type="text" :id="labelId"/>
-         <label ref="label" :for="labelId">{{ labelText }}</label>
+         <input :value="value" @input="$emit('update:value', $event.target.value)" @change="$emit('change')" type="text"/>
+         <label ref="label">{{ labelText }}</label>
       </div>
    </div>
 </template>
@@ -10,12 +10,9 @@
 <script>
 
 export default {
-   name: 'formInput',
-   props: {
-      labelText: {type: String},
-      labelId: {type: String},
-      value: String
-   }
+   name:'formInput',
+   props:['labelText','value'],
+   emits:['update:value', 'change']
 }
 </script>
 
@@ -26,14 +23,14 @@ export default {
 
 .group_rows {
    position: relative;
-   display: flex;
    margin-bottom: 20px;
+   display: block;
 }
 
 .group_rows input {
    cursor: pointer;
    outline: none;
-   
+   display: block;
    background: rgba(0,0,0,0.07);
    border: solid 1px #f2f2f2;
    border-radius: 5px 5px 0px 0px;
