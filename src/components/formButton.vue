@@ -1,6 +1,6 @@
 <template>
    <div>
-      <button>{{ buttonText }}</button>
+      <button type="button">{{ buttonText }}</button>
    </div>
 </template>
 
@@ -27,6 +27,10 @@ button {
    box-shadow: 0 0 5px rgba(0,0,0,0.5);
    font-size: 18px;
    font-weight: bold;
+}
+
+button:hover {
+   box-shadow: 0 0 5px rgba(0,0,0,0.8);
 }
 
 </style>

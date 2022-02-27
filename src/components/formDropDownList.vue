@@ -1,16 +1,21 @@
 <template>
    <div class="form">
-      <div class="label">
+      <div class="label" :v-click-outside="funcOutside" :id="id" @click="funcOpen">
          <p class="nameOption">Выбрать метод</p>
-         <img src="../assets/img/ArrowDownWhite.svg">
+         <div class="right_img">
+            <img v-if="!openSelect" src="../assets/img/ArrowDownWhite.svg">
+            <img v-else src="../assets/img/ArrowUpWhite.svg">
+         </div>
       </div>
-      <div class="dropdown">
+      <div v-if="openSelect" class="dropdown">
          <p class="option" v-for="item in listName" :key="item.item">{{ item.value }}</p>
       </div>
    </div>
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
+
 export default {
    name: "formDropDownList",
    props: {
@@ -19,11 +24,33 @@ export default {
          default() {
             return []
          }
-      }
+      },
+      id: { type: String }
+   },
+   directives: {
+      ClickOutside
    },
    data() {
       return {
-         select: ''
+         select: '',
+         openSelect: false
+      }
+   },
+   methods: {
+      funcOpen() {
+         this.openSelect = ! this.openSelect;
+         if(this.openSelect) {
+            document.getElementById(this.id).className += " label_after"
+         }
+         else {
+            document.getElementById(this.id).className = " label"
+         }
+      },
+      funcOutside() {
+         if(this.openSelect) {
+            this.openSelect = ! this.openSelect;
+            document.getElementById(this.id).className += " label_after"
+         }
       }
    }
 }
@@ -42,17 +69,31 @@ export default {
 .label {
    display: flex;
    flex-direction: row;
-   justify-content: space-around;
-   background: #fa7014;
+   justify-content: space-between;
    width: 100%;
-
-   border-radius: 10px 10px 0px 0px;
+   height: 100%;
+   border-radius: 10px;
    border: 3px solid #fa7014;
+   cursor: pointer;
+}
+
+.label_after {
+   border-radius: 10px 10px 0px 0px;
+   border-bottom: none;
+   transition: .6s;
+}
+
+.right_img {
+   background: #fa7014;
+   width: 55px;
+}
+
+img {
+   margin-top: 20px;
 }
 
 .nameOption {
-   background: #fa7014;
-
+   margin-left: 40px;
 }
 
 .dropdown {

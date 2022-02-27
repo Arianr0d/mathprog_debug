@@ -1,7 +1,7 @@
 <template>
    <div>
       <div class="group_rows">
-         <input v-model="value" type="text" :id="labelId"/>
+         <input v-model="value" type="text" :id="labelId" pattern="/^d$/">
          <label ref="label" :for="labelId">{{ labelText }}</label>
       </div>
    </div>
@@ -14,14 +14,10 @@ export default {
    props: {
       labelText: {type: String},
       labelId: {type: String},
-      value: String
    }
 }
 </script>
 
-/*
-   ! скачет label при изменении размера страницы экрана
- */
 <style scoped>
 
 .group_rows {
