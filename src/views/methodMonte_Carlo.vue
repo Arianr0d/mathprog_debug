@@ -2,16 +2,16 @@
    <form>
       <div class="group_col">
          <p class="title_name">Метод Монте-Карло</p>
-         <formInput v-model:value="functionString" :labelText="'Вид целевой функции'"/>
+         <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString"/>
          <div class="group_row_between">
-            <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'"/>
-            <formInput v-model:value="countVariable" :labelText="'Количество переменных'"/>
+            <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero"/>
+            <formInput v-model:value="countVariable" :labelText="'Количество переменных'" :validate="validNumber_no_zero"/>
             <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="20" :step="1" :id="'range1'"/>
          </div>
          <formSwitch v-model:value="switchOn" :labelText="'Добавить метод для дополнительного поиска'"/>
          <formDropDownList :listName="methodsName" :id="'listid'"/>
          <div class="group_row_right">
-            <formButton :buttonText="'Рассчитать'" @click="funcClick"/>
+            <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
          </div>
       </div>
    </form>
@@ -39,20 +39,31 @@ export default{
             {value: 'Монте-Карло', item: 1},
             {value: 'Имитация отжига', item: 2}
          ],
-         functionString: '',
+         functionString: 'x^2',
          countPoint: 100,
          countVariable: 2,
          valuePrecision: 3,
-         switchOn: ''
+         switchOn: false,
+         validNumber_no_zero: /^[1-9]\d*$/,
+         validFuncString: /^.[^\s]*$/
+         // /^[^\d!@#$%^&*()_]*$/ 
       }
    },
    methods: {
-      funcClick() {
-         console.log(this.switchOn)
-      },
-      funcValidNumber(value) {
-         let res = '/^[/d]$/';
-         return res.test(value);
+      // поиск переменных функции
+      clickButton() {
+         let result = this.functionString.matchAll(/[^\d!@#$%^&*()_+-/]*|[^!@#$%^&*()_\d]*/g)
+         result = Array.from(result);
+         let exception = ['cos','sin','tang','ctang','e','exp','log','pi']
+         let res = []
+         for(let i=0; i< result.length; i++) {
+            if(result[i] != '') {
+               res.push(result[i][0])
+            }
+         }
+         let c = res.reduce( (acc, item) => {
+         if (!exception.includes(item)) acc.push(item); return acc;} , []);      
+         console.log(Array.from(new Set(c)));
       }
    }
 }

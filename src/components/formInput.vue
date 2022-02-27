@@ -1,7 +1,7 @@
 <template>
    <div>
       <div class="group_rows">
-         <input :value="value" @input="$emit('update:value', $event.target.value)" type="text">
+         <input :value="value" @input="funcValidate" type="text">
          <label>{{ labelText }}</label>
       </div>
    </div>
@@ -11,8 +11,19 @@
 
 export default {
    name:'formInput',
-   props:['labelText','value'],
-   emits:['update:value']
+   props:['labelText','validate','value'],
+   emits:['update:value'],
+   methods: {
+      funcValidate(el) {
+         if(this.validate.test(el.target.value)) {
+            this.$emit('update:value', el.target.value)
+            el.target.className = " .group_rows input"
+         }
+         else {
+            el.target.className = " error"
+         }
+      }
+   }
 }
 </script>
 
@@ -66,6 +77,10 @@ export default {
 .form-group_rows input:focus + label {
   top: 0;
   font-size: 14px;
+}
+
+.error {
+   box-shadow: 0 0 11px red;
 }
 
 </style>
