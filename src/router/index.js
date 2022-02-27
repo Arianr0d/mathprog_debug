@@ -1,21 +1,16 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import ClickOutside from "vue-click-outside";
-
-Vue.use(VueRouter);
-Vue.use(ClickOutside);
+import { createWebHashHistory, createRouter } from "vue-router";
+import methodMonte_Carlo from "../views/methodMonte_Carlo.vue";
 
 const routes = [
   {
     path: "/",
     name: "methodMonte_Carlo",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/methodMonte_Carlo.vue"),
+    component: methodMonte_Carlo,
   },
 ];
 
-const router = new VueRouter({
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHashHistory(),
   routes,
 });
 
