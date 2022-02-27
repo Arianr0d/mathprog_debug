@@ -9,9 +9,9 @@
             <formRangeInput :minVal="0" :maxVal="20"/>
          </div>
          <formSwitch :labelText="'Добавить метод для дополнительного поиска'"/>
-         <formDropDownList :listName="methodsName"/>
+         <formDropDownList :listName="methodsName" :id="'listid'"/>
          <div class="group_row_right">
-            <formButton :buttonText="'Рассчитать'"/>
+            <formButton :buttonText="'Рассчитать'" @click="funcClick"/>
          </div>
       </div>
    </form>
@@ -40,6 +40,15 @@ export default{
             {value: 'Имитация отжига', item: 2}
          ],
          functionString: ''
+      }
+   },
+   methods: {
+      funcClick() {
+         console.log(this.functionString)
+      },
+      funcValidNumber(value) {
+         let res = '/^[/d]$/';
+         return res.test(value);
       }
    }
 }

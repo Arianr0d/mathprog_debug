@@ -43,6 +43,7 @@ export default {
   background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
 }
 
 .slider:before {

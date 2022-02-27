@@ -1,8 +1,8 @@
 <template>
    <div>
       <div class="group_rows">
-         <input :value="value" @input="$emit('update:value', $event.target.value)" @change="$emit('change')" type="text"/>
-         <label ref="label">{{ labelText }}</label>
+         <input v-model="value" type="text" :id="labelId" pattern="/^d$/">
+         <label ref="label" :for="labelId">{{ labelText }}</label>
       </div>
    </div>
 </template>
@@ -16,9 +16,6 @@ export default {
 }
 </script>
 
-/*
-   ! скачет label при изменении размера страницы экрана
- */
 <style scoped>
 
 .group_rows {
