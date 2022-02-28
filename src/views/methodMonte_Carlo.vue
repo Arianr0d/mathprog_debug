@@ -35,15 +35,9 @@ export default{
    },
    data() {
       return {
-         methodsName: [
-            {value: 'Монте-Карло', item: 1},
-            {value: 'Имитация отжига', item: 2}
-         ],
          functionString: 'x^2',
          countPoint: 100,
-         countVariable: 2,
          valuePrecision: 3,
-         switchOn: false,
          validNumber_no_zero: /^[1-9]\d*$/,
          validFuncString: /^.[^\s]*$/,
 

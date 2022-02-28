@@ -3,7 +3,7 @@
       <button>Монте-Карло</button>
    </router-link>
    <router-link to="/methodsimulatedannealing">
-      <button>Иммитация отжига</button>
+      <button>Имитация отжига</button>
    </router-link>
    <router-view/>
 </template>
@@ -36,6 +36,7 @@ button {
    font-size: 18px;
    color: rgba(0,0,0,0.8);
    cursor: pointer;
+   user-select: none;
 }
 
 button:hover {
