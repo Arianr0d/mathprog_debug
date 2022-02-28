@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "mathjs": "^10.1.1",
     "node-sass": "^7.0.1",
     "router": "^1.3.6",
     "vue": "^3.0.0",
