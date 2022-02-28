@@ -27,7 +27,7 @@ export default {
    data() {
       return {
          openForm: false,
-         validNumber: /^[-]|[0-9]\d*$/
+         validNumber: /^(0|[-][1-9][0-9]*|[1-9][0-9]*)$/
       }
    }
 }

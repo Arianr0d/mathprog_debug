@@ -1,7 +1,7 @@
 <template>
    <div class="group">
       <div class="group_rows">
-         <input :value="value" @input="funcValidate" @blur="$emit('change')" v-bind:style="{error: error}" type="text">
+         <input :value="value" @input="funcValidate" @blur="$emit('change')" v-bind:class="{error: error}" type="text">
          <label>{{ labelText }}</label>
       </div>
       <p v-if="error">{{ textError }}</p>
