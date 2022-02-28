@@ -1,7 +1,7 @@
 <template>
    <div class="group">
       <div class="group_rows">
-         <input :value="value" @input="funcValidate" @blur="funcFindVariable" type="text">
+         <input :value="value" @input="funcValidate" @blur="$emit('change')" v-bind:class="{error: error}" type="text">
          <label>{{ labelText }}</label>
       </div>
       <p v-if="error">{{ textError }}</p>
@@ -12,8 +12,8 @@
 
 export default {
    name:'formInput',
-   props:['labelText','validate','textError','value'],
-   emits:['update:value'],
+   props:['labelText','validate','textError','value','validError'],
+   emits:['update:value', 'change', 'update:validError'],
    data() {
       return {
          error: false
@@ -21,28 +21,9 @@ export default {
    },
    methods: {
       funcValidate(el) {
-         if(this.validate.test(el.target.value)) {
-            this.$emit('update:value', el.target.value)
-            el.target.className = " .group_rows input"
-            this.error = false
-         }
-         else {
-            el.target.className = " error"
-            el.target.value = ''
-            this.error = true
-            this.$emit('update:value', '')
-         }
-      },
-      /*
-         TODO: поиск переменных функции при смене фокуса
-      */
-      funcFindVariable(el) {
-         let result = el.target.value.match(/[^(\d)(!@#$%^&*()_+-/)]*|[^!@#$%^&*()_\d]*/g)
-         result = Array.from(new Set(result.filter(Boolean)));
-         let exception = ['cos','sin','tang','ctang','e','exp','log','pi']
-         let res = result.reduce( (acc, item) => {
-         if (!exception.includes(item)) acc.push(item); return acc;} , []);      
-         console.log(res);
+         this.error = !this.validate.test(el.target.value)
+         this.$emit('update:value', el.target.value)
+         this.$emit('validError', this.error)
       }
    }
 }
@@ -55,7 +36,6 @@ export default {
    display: flex;
    flex-direction: column;
    align-items: flex-start;
-   margin-bottom: 20px;
 }
 
 .group_rows {

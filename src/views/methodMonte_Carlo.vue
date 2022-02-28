@@ -2,14 +2,16 @@
    <form>
       <div class="group_col">
          <p class="title_name">Метод Монте-Карло</p>
-         <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc"/>
-         <div class="group_row_between">
-            <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable"/>
-            <formInput v-model:value="countVariable" :labelText="'Количество переменных'" :validate="validNumber_no_zero" :textError="''"/>
-            <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="20" :step="1" :id="'range1'"/>
+         <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError"/>
+         <formInterval v-model:params="objVariables"/>
+         <div class="group_row_start">
+            <div class="component">
+               <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable"/>
+            </div>
+            <div class="component">
+               <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="20" :step="1" :id="'range1'"/>
+            </div>
          </div>
-         <formSwitch v-model:value="switchOn" :labelText="'Добавить метод для дополнительного поиска'"/>
-         <formDropDownList :listName="methodsName" :id="'listid'"/>
          <div class="group_row_right">
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
          </div>
@@ -20,46 +22,61 @@
 <script>
 import formInput from '../components/formInput.vue'
 import formButton from '../components/formButton.vue'
-import formSwitch from '../components/formSwitch.vue'
 import formRangeInput from '../components/formRangeInput.vue'
-import formDropDownList from '../components/formDropDownList.vue'
+import formInterval from '../components/formInterval.vue'
 
 export default{
    name: 'methodMonte_Carlo',
    components: {
       formInput,
       formButton,
-      formSwitch,
       formRangeInput,
-      formDropDownList
+      formInterval
    },
    data() {
       return {
-         methodsName: [
-            {value: 'Монте-Карло', item: 1},
-            {value: 'Имитация отжига', item: 2}
-         ],
          functionString: 'x^2',
          countPoint: 100,
-         countVariable: 2,
          valuePrecision: 3,
-         switchOn: false,
          validNumber_no_zero: /^[1-9]\d*$/,
          validFuncString: /^.[^\s]*$/,
+
+         errorsForm: {funcError: false },
          
          textErrorFunc: 'Функция введена не корректно',
-         textErrorVariable: 'Количество точек должно быть целым'
+         textErrorVariable: 'Количество точек должно быть целым',
+
+         defaultLeft: -100000000,
+         defaultRight: 100000000,
+         objVariables: {'x' : { min: -100000000, max: 100000000, name: 'x'}},
       }
    },
    methods: {
       // поиск переменных функции
       clickButton() {
-         //let result = this.functionString.match(/[^(\d)(!@#$%^&*()_+-/)]*|[^!@#$%^&*()_\d]*/g)
-         /*result = Array.from(new Set(result.filter(Boolean)));
+         console.log(this.objVariables)
+      },
+      /*
+         TODO: поиск переменных функции при смене фокуса
+      */
+      funcFindVariable() {
+         let result = this.functionString.match(/[^(\d)(!@#$%^&*()_+-/)]*|[^!@#$%^&*()_\d]*/g)
+         result = Array.from(new Set(result.filter(Boolean)));
          let exception = ['cos','sin','tang','ctang','e','exp','log','pi']
          let res = result.reduce( (acc, item) => {
-         if (!exception.includes(item)) acc.push(item); return acc;} , []);      
-         console.log(res);*/
+         if (!exception.includes(item)) acc.push(item); return acc;} , []);    
+         
+         let new_val = {}
+         res.forEach(item => {
+            new_val[item] = { min: this.defaultLeft, max: this.defaultRight, name: item }
+         })  
+         for(let item in new_val) {
+            if(this.objVariables[new_val[item].name] != undefined) {
+               new_val[item] = this.objVariables[new_val[item].name]
+            }
+         }
+         this.objVariables = new_val
+         console.log(this.objVariables)
       }
    }
 }
@@ -71,7 +88,6 @@ export default{
 form {
    margin: auto 15vw;
    padding: 1vw 3vw 5vw 3vw;
-
    background: #fff;
    box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
@@ -82,11 +98,14 @@ form {
    flex-direction: column;
 }
 
-.group_row_between {
+.group_row_start {
    display: flex;
-   align-items: center;
-   justify-content: space-between;
+   justify-content: flex-start;
    align-items: flex-start;
+}
+
+.component {
+   margin: 0 20px 10px 0;
 }
 
 .group_row_right {

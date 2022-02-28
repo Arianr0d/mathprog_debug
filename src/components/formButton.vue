@@ -27,6 +27,7 @@ button {
    box-shadow: 0 0 5px rgba(0,0,0,0.5);
    font-size: 18px;
    font-weight: bold;
+   margin: 40px 0 10px 0;
 }
 
 button:hover {
