@@ -64,6 +64,7 @@ export default {
    align-items: center;
    width: 250px;
    margin: 0px;
+   margin-bottom: 20px;
 }
 
 .label {

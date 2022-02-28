@@ -16,6 +16,10 @@ export default {
 
 <style scoped>
 
+div {
+   margin: 40px 0 10px 0;
+}
+
 button {
    padding: 10px 20px;
    border-radius: 4px;
