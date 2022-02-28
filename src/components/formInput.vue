@@ -1,9 +1,10 @@
 <template>
-   <div>
+   <div class="group">
       <div class="group_rows">
-         <input :value="value" @input="funcValidate" type="text">
+         <input :value="value" @input="funcValidate" @blur="funcFindVariable" type="text">
          <label>{{ labelText }}</label>
       </div>
+      <p v-if="error">{{ textError }}</p>
    </div>
 </template>
 
@@ -11,17 +12,37 @@
 
 export default {
    name:'formInput',
-   props:['labelText','validate','value'],
+   props:['labelText','validate','textError','value'],
    emits:['update:value'],
+   data() {
+      return {
+         error: false
+      }
+   },
    methods: {
       funcValidate(el) {
          if(this.validate.test(el.target.value)) {
             this.$emit('update:value', el.target.value)
             el.target.className = " .group_rows input"
+            this.error = false
          }
          else {
             el.target.className = " error"
+            el.target.value = ''
+            this.error = true
+            this.$emit('update:value', '')
          }
+      },
+      /*
+         TODO: поиск переменных функции при смене фокуса
+      */
+      funcFindVariable(el) {
+         let result = el.target.value.match(/[^(\d)(!@#$%^&*()_+-/)]*|[^!@#$%^&*()_\d]*/g)
+         result = Array.from(new Set(result.filter(Boolean)));
+         let exception = ['cos','sin','tang','ctang','e','exp','log','pi']
+         let res = result.reduce( (acc, item) => {
+         if (!exception.includes(item)) acc.push(item); return acc;} , []);      
+         console.log(res);
       }
    }
 }
@@ -29,9 +50,16 @@ export default {
 
 <style scoped>
 
+.group {
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   margin-bottom: 20px;
+}
+
 .group_rows {
    position: relative;
-   margin-bottom: 20px;
    display: flex;
    width: 100%;
 }
@@ -83,4 +111,7 @@ export default {
    box-shadow: 0 0 11px red;
 }
 
+.group p {
+   color: rgba(255, 0, 0, 0.7);
+}
 </style>

@@ -2,10 +2,10 @@
    <form>
       <div class="group_col">
          <p class="title_name">Метод Монте-Карло</p>
-         <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString"/>
+         <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc"/>
          <div class="group_row_between">
-            <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero"/>
-            <formInput v-model:value="countVariable" :labelText="'Количество переменных'" :validate="validNumber_no_zero"/>
+            <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable"/>
+            <formInput v-model:value="countVariable" :labelText="'Количество переменных'" :validate="validNumber_no_zero" :textError="''"/>
             <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="20" :step="1" :id="'range1'"/>
          </div>
          <formSwitch v-model:value="switchOn" :labelText="'Добавить метод для дополнительного поиска'"/>
@@ -45,25 +45,21 @@ export default{
          valuePrecision: 3,
          switchOn: false,
          validNumber_no_zero: /^[1-9]\d*$/,
-         validFuncString: /^.[^\s]*$/
-         // /^[^\d!@#$%^&*()_]*$/ 
+         validFuncString: /^.[^\s]*$/,
+         
+         textErrorFunc: 'Функция введена не корректно',
+         textErrorVariable: 'Количество точек должно быть целым'
       }
    },
    methods: {
       // поиск переменных функции
       clickButton() {
-         let result = this.functionString.matchAll(/[^\d!@#$%^&*()_+-/]*|[^!@#$%^&*()_\d]*/g)
-         result = Array.from(result);
+         //let result = this.functionString.match(/[^(\d)(!@#$%^&*()_+-/)]*|[^!@#$%^&*()_\d]*/g)
+         /*result = Array.from(new Set(result.filter(Boolean)));
          let exception = ['cos','sin','tang','ctang','e','exp','log','pi']
-         let res = []
-         for(let i=0; i< result.length; i++) {
-            if(result[i] != '') {
-               res.push(result[i][0])
-            }
-         }
-         let c = res.reduce( (acc, item) => {
+         let res = result.reduce( (acc, item) => {
          if (!exception.includes(item)) acc.push(item); return acc;} , []);      
-         console.log(Array.from(new Set(c)));
+         console.log(res);*/
       }
    }
 }
@@ -90,6 +86,7 @@ form {
    display: flex;
    align-items: center;
    justify-content: space-between;
+   align-items: flex-start;
 }
 
 .group_row_right {
