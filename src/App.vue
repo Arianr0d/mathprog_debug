@@ -45,7 +45,9 @@ button:hover {
    background: #fa7014;
 }
 
+a.router-link-active button,
 button:active {
+   color: white;
    box-shadow: 0 0 5px rgba(0,0,0,1);
    background: #DD6514;
 }

@@ -85,6 +85,10 @@ label {
    margin-top: 15px;
 }
 
+p {
+   color: #fa7014;
+}
+
 .input {
    width: 150px;
 }
