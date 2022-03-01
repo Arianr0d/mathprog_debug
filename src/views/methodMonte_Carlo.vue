@@ -82,18 +82,15 @@ export default{
       clickButton() {
          let options = {iterations: this.countPoint, params: this.objVariables, func: this.functionString}
          let res = Monte_Karlo(options)
-         console.log(res.xxx)
          this.openFormResult = true;
          this.result = res;
 
-         console.log(res)
          this.stringResult = 'f(';
          for(let index in res.ans) {
             this.resParam[index] = { value: math.round(res.ans[index], this.valuePrecision), index: index};
             this.stringResult += index + ',';
          } 
          this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + math.round(res.value, this.valuePrecision);
-         console.log(this.stringResult);
       },
       /*
          TODO: поиск переменных функции при смене фокуса
@@ -115,7 +112,6 @@ export default{
             }
          }
          this.objVariables = new_val
-         console.log(this.objVariables)
       }
    }
 }

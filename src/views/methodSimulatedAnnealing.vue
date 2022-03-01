@@ -11,10 +11,26 @@
             <formInput v-model:value="countPointSA" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable"/>
             <formInput v-model:value="countTemperatureSA" :labelText="'Температура'" :validate="validValueFloat" :textError="textErrorTemperature"/>
             <formInput v-model:value="countReductionTempSA" :labelText="'Коэфициент снижения температуры'" :validate="validReductionTempSA" :textError="textErrorReductionTempSA"/>
+         </div>
+         <div class="group_row_start">
+            <formInput v-model:value="epsilon" :labelText="'Окрестность для выбора точек'" :validate="validReductionTempSA" :textError="textErrorEpsilon"/>
             <formRangeInput v-model:value="valuePrecisionSA" :minVal="0" :maxVal="20" :step="1" :id="'range2'"/>
          </div>
          <div class="group_row_right">
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
+         </div>
+      </div>
+      <div v-if="openFormResult">
+         <div class="group_res">
+            <p class="outputText">{{ stringResult }}</p>
+         </div>
+         <div class="group_res_center">
+            <ul v-for="item in resParam" :key="item.index">
+               <li>{{item.index}} = {{ item.value }}</li>
+            </ul>
+         </div>
+         <div class="group_row_right">
+            <p class="outputText">Время работы алгоритма: {{ result.time }} мс</p>
          </div>
       </div>
    </form>
@@ -25,6 +41,11 @@ import formInput from '../components/formInput.vue'
 import formButton from '../components/formButton.vue'
 import formRangeInput from '../components/formRangeInput.vue'
 import formInterval from '../components/formInterval.vue'
+import Simulated_annealing from '../functions/Simulated_annealing.js'
+import { create, all } from 'mathjs'
+
+const config = { }
+const math = create(all, config)
 
 export default {
    name: "methodSimulatedAnnealing",
@@ -40,10 +61,11 @@ export default {
          countPointSA: 100,
          countTemperatureSA: 1000000000,
          countReductionTempSA: 0.01,
+         epsilon: 0.0000001,
          valuePrecisionSA: 3,
          validNumber_no_zero: /^[1-9]\d*$/,
          validFuncString: /^.[^\s]*$/,
-         validValueFloat: /^(0|[-]?[0-9][1-9]*\.[0-9]*|[-]?[1-9]*)$/, 
+         validValueFloat: /^(0|[-]?[0-9]?[1-9]*[0-9]*.[0-9]|[-]?[1-9]*|[1-9][0-9]*)$/, 
          validReductionTempSA: /^(0|1|0\.[0-9]*)$/,
 
          errorsForm: {funcError: false },
@@ -52,12 +74,60 @@ export default {
          textErrorVariable: 'Количество точек должно быть целым',
          textErrorTemperature: 'Температура введена неверно',
          textErrorReductionTempSA: 'Коэффициент введён неверно',
+         textErrorEpsilon: 'Размер окрестности введён неверно',
 
          defaultLeft: -100000000,
          defaultRight: 100000000,
-         objVariablesAS: {'x' : { min: -100000000, max: 100000000, name: 'x'}},
+         objVariablesSA: {'x' : { min: -100000000, max: 100000000, name: 'x'}},
+
+         openFormResult: false,
+         stringResult: '',
+         resParam: {},
+         result: {}
       }
    },
+   methods: {
+      // поиск переменных функции
+      clickButton() {
+         let options = {iterations: this.countPointSA, 
+                        params: this.objVariablesSA, 
+                        func: this.functionStringSA,
+                        temperature: this.countTemperatureSA,
+                        eps: this.epsilon,
+                        r: this.countReductionTempSA }
+         let res = Simulated_annealing(options)
+         this.openFormResult = true;
+         this.result = res;
+
+         this.stringResult = 'f(';
+         for(let index in res.ans) {
+            this.resParam[index] = { value: math.round(res.ans[index], this.valuePrecisionSA), index: index};
+            this.stringResult += index + ',';
+         } 
+         this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + math.round(res.value, this.valuePrecisionSA);
+      },
+      /*
+         TODO: поиск переменных функции при смене фокуса
+      */
+      funcFindVariable() {
+         let result = this.functionString.match(/[^(\d)(!@#$%^&*()_+-/)]*|[^!@#$%^&*()_\d]*/g)
+         result = Array.from(new Set(result.filter(Boolean)));
+         let exception = ['cos','sin','tang','ctang','e','exp','log','pi']
+         let res = result.reduce( (acc, item) => {
+         if (!exception.includes(item)) acc.push(item); return acc;} , []);    
+         
+         let new_val = {}
+         res.forEach(item => {
+            new_val[item] = { min: this.defaultLeft, max: this.defaultRight, name: item }
+         })  
+         for(let item in new_val) {
+            if(this.objVariables[new_val[item].name] != undefined) {
+               new_val[item] = this.objVariables[new_val[item].name]
+            }
+         }
+         this.objVariables = new_val
+      }
+   }
 }
 </script>
 
@@ -82,10 +152,17 @@ form {
    align-items: center; 
 }
 
+.group_res {
+   display: flex;
+   align-items: flex-start;
+   flex-direction: column;
+}
+
 .group_row_start {
    display: flex;
    justify-content: space-between;
    align-items: flex-start;
+   margin-bottom: 20px;
 }
 
 .component {
@@ -104,10 +181,19 @@ form {
    font-weight: bold;
 }
 
+ul {
+   list-style-type: none;
+}
+
 img {
    width: 50px;
    height: auto;
    margin-right: 15px;
+}
+
+.outputText, li { 
+   font-size: 20px;
+   color: rgba(0, 0, 0, 0.8);
 }
 
 </style>
