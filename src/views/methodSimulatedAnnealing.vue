@@ -1,7 +1,10 @@
 <template>
    <form>
       <div class="group_col">
-         <p class="title_name">Метод имитации отжига</p>
+         <div class="group_row_">
+            <img src="../assets/img/debug2.svg">
+            <p class="title_name">Метод имитации отжига</p>
+         </div>
          <formInput v-model:value="functionStringSA" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError"/>
          <formInterval v-model:params="objVariablesSA"/>
          <div class="group_row_start">
@@ -73,6 +76,12 @@ form {
    flex-direction: column;
 }
 
+.group_row_ {
+   display: flex;
+   justify-content: flex-start;
+   align-items: center; 
+}
+
 .group_row_start {
    display: flex;
    justify-content: space-between;
@@ -93,6 +102,12 @@ form {
    text-align: left;
    font-size: 20pt;
    font-weight: bold;
+}
+
+img {
+   width: 50px;
+   height: auto;
+   margin-right: 15px;
 }
 
 </style>
