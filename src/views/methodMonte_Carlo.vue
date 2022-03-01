@@ -1,7 +1,10 @@
 <template>
    <form>
       <div class="group_col">
-         <p class="title_name">Метод Монте-Карло</p>
+         <div class="group_row_start">
+            <img src="../assets/img/debug2.svg">
+            <p class="title_name">Метод Монте-Карло</p>
+         </div>
          <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError"/>
          <formInterval v-model:params="objVariables"/>
          <div class="group_row_start">
@@ -16,6 +19,19 @@
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
          </div>
       </div>
+      <div v-if="openFormResult">
+         <div class="group_res">
+            <p class="outputText">{{ stringResult }}</p>
+         </div>
+         <div class="group_res_center">
+            <ul v-for="item in resParam" :key="item.index">
+               <li>{{item.index}} = {{ item.value }}</li>
+            </ul>
+         </div>
+         <div class="group_row_right">
+            <p class="outputText">Время работы алгоритма: {{ result.time }} мс</p>
+         </div>
+      </div>
    </form>
 </template>
 
@@ -24,6 +40,11 @@ import formInput from '../components/formInput.vue'
 import formButton from '../components/formButton.vue'
 import formRangeInput from '../components/formRangeInput.vue'
 import formInterval from '../components/formInterval.vue'
+import Monte_Karlo from '../functions/Monte-Karlo.js'
+import { create, all } from 'mathjs'
+
+const config = { }
+const math = create(all, config)
 
 export default{
    name: 'methodMonte_Carlo',
@@ -49,12 +70,29 @@ export default{
          defaultLeft: -100000000,
          defaultRight: 100000000,
          objVariables: {'x' : { min: -100000000, max: 100000000, name: 'x'}},
+
+         openFormResult: false,
+         stringResult: '',
+         resParam: {},
+         result: {}
       }
    },
    methods: {
       // поиск переменных функции
       clickButton() {
-         console.log(this.objVariables)
+         let options = {iterarions: this.countPoint, params: this.objVariables, func: this.functionString}
+         let res = Monte_Karlo(options)
+         this.openFormResult = true;
+         this.result = res;
+
+         console.log(res)
+         this.stringResult = 'f(';
+         for(let index in res.ans) {
+            this.resParam[index] = { value: math.round(res.ans[index], this.valuePrecision), index: index};
+            this.stringResult += index + ',';
+         } 
+         this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + math.round(res.value, this.valuePrecision);
+         console.log(this.stringResult);
       },
       /*
          TODO: поиск переменных функции при смене фокуса
@@ -83,7 +121,6 @@ export default{
 </script>
 
 <style scoped>
-@import "../assets/scss/function.scss";
 
 form {
    margin: auto 15vw;
@@ -98,10 +135,22 @@ form {
    flex-direction: column;
 }
 
+.group_res_center {
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+}
+
+.group_res {
+   display: flex;
+   align-items: flex-start;
+   flex-direction: column;
+}
+
 .group_row_start {
    display: flex;
    justify-content: flex-start;
-   align-items: flex-start;
+   align-items: center;
 }
 
 .component {
@@ -118,6 +167,21 @@ form {
    text-align: left;
    font-size: 20pt;
    font-weight: bold;
+}
+
+ul {
+   list-style-type: none;
+}
+
+img {
+   width: 50px;
+   height: auto;
+   margin-right: 15px;
+}
+
+.outputText, li { 
+   font-size: 20px;
+   color: rgba(0, 0, 0, 0.8);
 }
 
 </style>

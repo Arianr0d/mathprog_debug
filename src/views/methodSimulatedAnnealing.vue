@@ -59,7 +59,6 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/scss/function.scss";
 
 form {
    margin: auto 15vw;
