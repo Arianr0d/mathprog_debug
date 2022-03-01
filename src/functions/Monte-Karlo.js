@@ -16,7 +16,7 @@ function local(options){
 }
 
 function Monte_Karlo(options){
-    let iterarions = options.iterations;
+    let iteraions = options.iterations;
     let params = options.params;
     let func = options.func;
     let ready = options.ready;
@@ -26,13 +26,15 @@ function Monte_Karlo(options){
     if (count == undefined) count = 1;
     let arr_cnt = 1;
     let arr = new Array();
+    let xxx = 0;
     let start = new Date().getTime();
     
 
     let x = generate_point(params);
     arr.unshift(x);
     let value = math.evaluate(func, x);
-    for (let t = 0; t < iterarions; t++){
+    for (let t = 0; t < iteraions; t++){
+        xxx++;
         let dx = generate_point(params);
         let df = math.evaluate(func, dx);
         if (df < value) {
@@ -46,6 +48,7 @@ function Monte_Karlo(options){
             value = df;
             x = dx;
             if (ready != undefined && ready > value){
+                console.log("!");
                 break;
             }
         }
@@ -71,7 +74,8 @@ function Monte_Karlo(options){
     let result = {
         ans: x,
         value: value,
-        time: t 
+        time: t,
+        xxx
     } 
 
     return result;

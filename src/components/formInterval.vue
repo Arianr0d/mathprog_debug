@@ -1,7 +1,7 @@
 <template>
-   <div v-bind:class="{openForm: openForm}">
+   <div class="main_div" v-bind:class="{openForm: openForm}">
       <div class="group_top" @click="openForm =! openForm">
-         <img v-bind:style="{ openForm: imgRotate }" src="../assets/img/angleDown.svg">
+            <img v-bind:class="{openForm: imgRotate}" src="../assets/img/angleDown.svg" >
          <p>Ограничения оптимизации</p>
       </div>
       <div v-if="openForm" class="group">
@@ -27,7 +27,7 @@ export default {
    data() {
       return {
          openForm: false,
-         validNumber: /^(0|[-][1-9][0-9]*|[1-9][0-9]*)$/
+         validNumber: /^(0|[-]?[0-9][1-9]*\.[0-9]*|[-]?[1-9]*)$/
       }
    }
 }
@@ -38,7 +38,9 @@ export default {
 */
 
 <style scoped>
-
+.main_div{
+   transition: .4s ease-in-out;
+}
 .openForm {
    margin: 10px 0 40px 0;
    border: 1px solid rgba(0, 0, 0, 0.3);
@@ -59,17 +61,19 @@ export default {
    width: 280px;
    cursor: pointer;
 }
-
+.openForm div img {
+   transform: rotateX(180deg);
+   margin-bottom: 5px;
+}
 img {
+   transform-style: preserve-3d;
+   margin-right: 10px;
+   transition: .7s ease-in-out;
    width: 30px;
    height: auto;
-   margin-right: 10px;
-   transition: 1s ease-in-out;
 }
 
-img.imgRotate {
-   transform: rotateY(180deg);
-}
+
 
 .group_var {
    display: flex;

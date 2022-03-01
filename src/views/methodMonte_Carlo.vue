@@ -80,8 +80,9 @@ export default{
    methods: {
       // поиск переменных функции
       clickButton() {
-         let options = {iterarions: this.countPoint, params: this.objVariables, func: this.functionString}
+         let options = {iterations: this.countPoint, params: this.objVariables, func: this.functionString}
          let res = Monte_Karlo(options)
+         console.log(res.xxx)
          this.openFormResult = true;
          this.result = res;
 
