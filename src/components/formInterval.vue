@@ -56,7 +56,7 @@ export default {
 
 .group_top {
    display: flex;
-   width: 250px;
+   width: 280px;
    cursor: pointer;
 }
 
@@ -83,10 +83,12 @@ img.imgRotate {
 
 label {
    margin-top: 15px;
+   font-size: 26px;
 }
 
 p {
    color: #fa7014;
+   font-size: 18px;
 }
 
 .input {
