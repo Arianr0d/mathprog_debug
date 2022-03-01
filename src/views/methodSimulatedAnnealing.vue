@@ -15,6 +15,7 @@
          <div class="group_row_start">
             <formInput v-model:value="epsilon" :labelText="'Окрестность для выбора точек'" :validate="validReductionTempSA" :textError="textErrorEpsilon"/>
             <formRangeInput v-model:value="valuePrecisionSA" :minVal="0" :maxVal="20" :step="1" :id="'range2'"/>
+            <formInput style="visibility: hidden"/>
          </div>
          <div class="group_row_right">
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
@@ -61,7 +62,7 @@ export default {
          countPointSA: 100,
          countTemperatureSA: 1000000000,
          countReductionTempSA: 0.01,
-         epsilon: 0.0000001,
+         epsilon: 0.000001,
          valuePrecisionSA: 3,
          validNumber_no_zero: /^[1-9]\d*$/,
          validFuncString: /^.[^\s]*$/,
@@ -110,7 +111,7 @@ export default {
          TODO: поиск переменных функции при смене фокуса
       */
       funcFindVariable() {
-         let result = this.functionString.match(/[^(\d)(!@#$%^&*()_+-/)]*|[^!@#$%^&*()_\d]*/g)
+         let result = this.functionStringSA.match(/[^(\d)(!@#$%^&*()_+-/)]*|[^!@#$%^&*()_\d]*/g)
          result = Array.from(new Set(result.filter(Boolean)));
          let exception = ['cos','sin','tang','ctang','e','exp','log','pi']
          let res = result.reduce( (acc, item) => {
@@ -121,11 +122,11 @@ export default {
             new_val[item] = { min: this.defaultLeft, max: this.defaultRight, name: item }
          })  
          for(let item in new_val) {
-            if(this.objVariables[new_val[item].name] != undefined) {
-               new_val[item] = this.objVariables[new_val[item].name]
+            if(this.objVariablesSA[new_val[item].name] != undefined) {
+               new_val[item] = this.objVariablesSA[new_val[item].name]
             }
          }
-         this.objVariables = new_val
+         this.objVariablesSA = new_val
       }
    }
 }

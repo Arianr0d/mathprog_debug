@@ -13,7 +13,7 @@ function generate_point(options){
 function generate_point_in_eps(pred_point, eps){
     let point = {};
     for (let key in pred_point){
-        point[key] = math.random(pred_point[key]-eps, pred_point[key]+eps)
+        point[key] = math.random(pred_point[key]-eps, pred_point[key] -(-eps))
     }
     return point;
 }
@@ -25,7 +25,6 @@ function Simulated_annealing(options){
     let func = options.func;
     let eps = options.eps;
     let r = options.r;
-
     let start = new Date().getTime();
 
     let x = generate_point(params)
