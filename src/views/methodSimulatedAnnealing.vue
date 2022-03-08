@@ -14,7 +14,7 @@
          </div>
          <div class="group_row_start">
             <formInput v-model:value="epsilon" :labelText="'Окрестность для выбора точек'" :validate="validReductionTempSA" :textError="textErrorEpsilon"/>
-            <formRangeInput v-model:value="valuePrecisionSA" :minVal="0" :maxVal="20" :step="1" :id="'range2'"/>
+            <formRangeInput v-model:value="valuePrecisionSA" :minVal="0" :maxVal="15" :step="1" :id="'range2'"/>
             <formInput style="visibility: hidden"/>
          </div>
          <div class="group_row_right">
@@ -88,7 +88,6 @@ export default {
       }
    },
    methods: {
-      // поиск переменных функции
       clickButton() {
          let options = {iterations: this.countPointSA, 
                         params: this.objVariablesSA, 

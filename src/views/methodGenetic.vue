@@ -1,35 +1,31 @@
 <template>
    <form>
       <div class="group_col">
-         <div class="group_row_start">
+         <div class="group_row_">
             <img src="../assets/img/debug2.svg">
-            <p class="title_name">Метод Монте-Карло</p>
+            <p class="title_name">Генетический алгоритм</p>
          </div>
          <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError"/>
          <formInterval v-model:params="objVariables"/>
          <div class="group_row_start">
-            <div class="component">
-               <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable"/>
+            <formInput v-model:value="countIteration" :labelText="'Число итераций'" :validate="validNumber_no_zero" :textError="textErrorNumber"/>
+            <formInput v-model:value="sizeStartPopulation" :labelText="'Размер начальной популяции'" :validate="validNumber_no_zero" :textError="textErrorNumber"/>
+            <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textError="textErrorSelectionFactor"/>
+         </div>
+         <div class="group_row_start">
+            <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability"/>
+            <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability"/>
+            <div style="width: 275px">
+               <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range3'"/>
             </div>
-            <div class="component">
-               <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range1'"/>
+         </div>
+         <div class="group_row_start">
+            <div style="width: 275px">
+               <formDropDownList v-model:checkOption="checkTypeCross" :listName="listTypeCross" :id="'list1'"/>
             </div>
          </div>
          <div class="group_row_right">
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
-         </div>
-      </div>
-      <div v-if="openFormResult">
-         <div class="group_res">
-            <p class="outputText">{{ stringResult }}</p>
-         </div>
-         <div class="group_res_center">
-            <ul v-for="item in resParam" :key="item.index">
-               <li>{{item.index}} = {{ item.value }}</li>
-            </ul>
-         </div>
-         <div class="group_row_right">
-            <p class="outputText">Время работы алгоритма: {{ result.time }} мс</p>
          </div>
       </div>
    </form>
@@ -37,35 +33,47 @@
 
 <script>
 import formInput from '../components/formInput.vue'
+import formInterval from '../components/formInterval.vue'
 import formButton from '../components/formButton.vue'
 import formRangeInput from '../components/formRangeInput.vue'
-import formInterval from '../components/formInterval.vue'
-import Monte_Karlo from '../functions/Monte-Karlo.js'
-import { create, all } from 'mathjs'
+import formDropDownList from '../components/formDropDownList.vue'
 
-const config = { }
-const math = create(all, config)
-
-export default{
-   name: 'methodMonte_Carlo',
+export default {
+   name: "methodGenetic",
    components: {
       formInput,
+      formInterval,
       formButton,
       formRangeInput,
-      formInterval
+      formDropDownList
    },
    data() {
       return {
          functionString: 'x^2',
-         countPoint: 100,
+         countIteration: 1000,
+         sizeStartPopulation: 100,
+         selectionFactor: 0.25,
+         crossProbability: 0.95,
+         mutationProbability: 0.01,
          valuePrecision: 3,
+         checkTypeCross: 'Тип скрещивания',
+         listTypeCross: [
+            {item: 1, value: 'Одноточечный'},
+            {item: 2, value: 'Двуточечный'},
+            {item: 3, value: 'Равномерный'}
+         ],
+
          validNumber_no_zero: /^[1-9]\d*$/,
          validFuncString: /^.[^\s]*$/,
+         validValueFloat: /^(0|[-]?[0-9]?[1-9]*[0-9]*.[0-9]|[-]?[1-9]*|[1-9][0-9]*)$/, 
+         validZero_to_One: /^(0|1|0\.[0-9]*)$/,
 
-         errorsForm: {funcError: false },
+         errorsForm: { funcError: false },
          
          textErrorFunc: 'Функция введена не корректно',
-         textErrorVariable: 'Количество точек должно быть целым',
+         textErrorNumber: 'Число должно быть целым',
+         textErrorSelectionFactor: 'Коэффициент введён неверно',
+         textErrorProbability: 'Вероятность введена неверно',
 
          defaultLeft: -100000000,
          defaultRight: 100000000,
@@ -78,22 +86,11 @@ export default{
       }
    },
    methods: {
-      // поиск переменных функции
       clickButton() {
-         let options = {iterations: this.countPoint, params: this.objVariables, func: this.functionString}
-         let res = Monte_Karlo(options)
-         this.openFormResult = true;
-         this.result = res;
 
-         this.stringResult = 'f(';
-         for(let index in res.ans) {
-            this.resParam[index] = { value: math.round(res.ans[index], this.valuePrecision), index: index};
-            this.stringResult += index + ',';
-         } 
-         this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + math.round(res.value, this.valuePrecision);
       },
       /*
-         TODO: поиск переменных функции при смене фокуса
+        TODO: поиск переменных функции при смене фокуса
       */
       funcFindVariable() {
          let result = this.functionString.match(/[^(\d)(!@#$%^&*()_+-/)]*|[^!@#$%^&*()_\d]*/g)
@@ -132,10 +129,10 @@ form {
    flex-direction: column;
 }
 
-.group_res_center {
+.group_row_ {
    display: flex;
-   justify-content: center;
-   flex-wrap: wrap;
+   justify-content: flex-start;
+   align-items: center; 
 }
 
 .group_res {
@@ -146,12 +143,13 @@ form {
 
 .group_row_start {
    display: flex;
-   justify-content: flex-start;
+   justify-content: space-between;
    align-items: center;
+   margin-bottom: 20px;
 }
 
 .component {
-   margin: 0 20px 10px 0;
+   margin: 0 40px 10px 0;
 }
 
 .group_row_right {

@@ -1,35 +1,25 @@
 <template>
    <div class="form">
-      <div class="label" :v-click-outside="funcOutside" :id="id" @click="funcOpen">
-         <p class="nameOption">Выбрать метод</p>
+      <div class="label" :id="id" @click="funcOpen">
+         <div v-bind:style="{openSelect: imgRotate}" class="textDirection">
+            <p type="text">{{ checkOption}}</p>
+         </div>
          <div class="right_img">
-            <img v-if="!openSelect" src="../assets/img/ArrowDownWhite.svg">
-            <img v-else src="../assets/img/ArrowUpWhite.svg">
+            <img src="../assets/img/ArrowDownWhite.svg">
          </div>
       </div>
       <div v-if="openSelect" class="dropdown">
-         <p class="option" v-for="item in listName" :key="item.item">{{ item.value }}</p>
+         <p class="option" v-for="item in listName" :key="item.item" @click="funcCheckOption(item)">{{ item.value }}</p>
       </div>
    </div>
 </template>
 
 <script>
-import ClickOutside from 'vue-click-outside'
 
 export default {
    name: "formDropDownList",
-   props: {
-      listName: {
-         type: Array,
-         default() {
-            return []
-         }
-      },
-      id: { type: String }
-   },
-   directives: {
-      ClickOutside
-   },
+   props: ['listName','id','checkOption'],
+   emits: ['update:checkOption'],
    data() {
       return {
          select: '',
@@ -46,13 +36,15 @@ export default {
             document.getElementById(this.id).className = " label"
          }
       },
-      funcOutside() {
-         if(this.openSelect) {
-            this.openSelect = ! this.openSelect;
-            document.getElementById(this.id).className += " label_after"
-         }
+      funcCheckOption(value) {
+         this.props.checkOption = value.value
       }
    }
+
+   /*
+      ! проблема с поворотом изображения
+      ? как передавать модель
+   */
 }
 </script>
 
@@ -62,49 +54,67 @@ export default {
    display: flex;
    flex-direction: column;
    align-items: center;
-   width: 250px;
+   width: 100%;
    margin: 0px;
    margin-bottom: 20px;
+   transition: .4s ease-in-out;
 }
 
 .label {
    display: flex;
    flex-direction: row;
    justify-content: space-between;
+   border-radius: 5px 5px 0px 0px;
+   background: rgba(0,0,0,0.07);
+
+   border: solid 1px rgba(0,0,0,0.0);
+   border-bottom-color: black;
+   border-bottom-width: 1.5px;
+
    width: 100%;
    height: 100%;
-   border-radius: 10px;
-   border: 3px solid #fa7014;
    cursor: pointer;
 }
 
+.textDirection {
+   padding-left: 15px;
+}
+
 .label_after {
-   border-radius: 10px 10px 0px 0px;
    border-bottom: none;
    transition: .6s;
 }
 
 .right_img {
-   background: #fa7014;
+   background: rgba(0,0,0,0.07);
    width: 55px;
 }
 
+.label:hover .right_img {
+   background: rgba(0,0,0,0.15);
+}
+
+.right_img img + .imgRotate {
+   transform: rotateX(180deg);
+   margin-bottom: 5px;
+}
+
 img {
+   transform-style: preserve-3d;
+   transition: .7s ease-in-out;
    margin-top: 20px;
 }
 
-.nameOption {
-   margin-left: 40px;
-}
-
 .dropdown {
+   text-align: left;
    flex-direction: column;
    list-style-type: none;
    width: 100%;
    font-size: 16px;
-   border: 3px solid #fa7014;
-   border-radius: 0px 0px 10px 10px;
    cursor: pointer;
+   border: 1px solid rgba(0,0,0,0.0);
+   border-top: 1px solid rgba(0,0,0,0.07);
+   background: rgba(0,0,0,0.07);
 }
 
 .dropdown::-webkit-scrollbar-thumb {
@@ -112,9 +122,9 @@ img {
 }
 
 .option {
-   background: #fff;
+   background: rgba(0,0,0,0.0);
    border: none;
-   padding: 10px 20px;
+   padding: 10px 15px;
    color: black;
    vertical-align: left;
    margin: 0px;
@@ -122,6 +132,7 @@ img {
 
 .option:hover {
    background: rgba(0,0,0,0.09);
+   color: #FFFEFE;
 }
 
 </style>

@@ -33,10 +33,6 @@ export default {
 }
 </script>
 
-/*
-   ! не меняется отображение галочки при раскрытии div с интервалами переменных 
-*/
-
 <style scoped>
 .main_div{
    transition: .4s ease-in-out;
@@ -61,10 +57,12 @@ export default {
    width: 280px;
    cursor: pointer;
 }
+
 .openForm div img {
    transform: rotateX(180deg);
    margin-bottom: 5px;
 }
+
 img {
    transform-style: preserve-3d;
    margin-right: 10px;
@@ -72,8 +70,6 @@ img {
    width: 30px;
    height: auto;
 }
-
-
 
 .group_var {
    display: flex;
