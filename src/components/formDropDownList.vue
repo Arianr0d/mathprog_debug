@@ -1,6 +1,6 @@
 <template>
    <div class="form">
-      <div class="label" :id="id" @click="funcOpen" >
+      <div class="label" :id="id" @click="funcOpen">
          <div v-bind:style="{openSelect: imgRotate}" class="textDirection">
             <p type="text">{{ checkOption }}</p>
          </div>

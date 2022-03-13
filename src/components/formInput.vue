@@ -1,7 +1,7 @@
 <template>
    <div class="group">
       <div class="group_rows">
-         <input :value="value" @input="funcValidate" @blur="$emit('change')" v-bind:class="{error: error}" type="text">
+         <input :value="value" @input="funcValidate" @blur="$emit('change')" v-bind:class="{error: error}" type="text" v-bind:style="'--width:'+countWidth+'%'">
          <label>{{ labelText }}</label>
          <div v-if="reference" class="reference">
             <img src="../assets/img/question.svg">
@@ -26,7 +26,8 @@ export default {
       textError: String,
       value: String,
       validError: Boolean,
-      textTooltip: String
+      textTooltip: String,
+      countWidth: String
    },
    emits:['update:value', 'change', 'update:validError'],
    data() {
@@ -70,7 +71,7 @@ export default {
    border-bottom-width: 1.5px;
    padding: 25px 15px 0px 15px;
    font-size: 20px;
-   width: 100%;
+   width: var(--width);
    height: 30px;
 }
 
