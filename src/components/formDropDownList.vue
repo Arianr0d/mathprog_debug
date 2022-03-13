@@ -1,15 +1,17 @@
 <template>
    <div class="form">
-      <div class="label" :id="id" @click="funcOpen">
+      <div class="label" :id="id" @click="funcOpen" >
          <div v-bind:style="{openSelect: imgRotate}" class="textDirection">
-            <p type="text">{{ checkOption}}</p>
+            <p type="text">{{ checkOption }}</p>
          </div>
          <div class="right_img">
             <img src="../assets/img/ArrowDownWhite.svg">
          </div>
       </div>
       <div v-if="openSelect" class="dropdown">
-         <p class="option" v-for="item in listName" :key="item.item" @click="funcCheckOption(item)">{{ item.value }}</p>
+         <div class="test"></div>
+         <p class="option" v-for="item in listName" :key="item.item" 
+         @click="funcCheckOption(item)">{{ item.value }}</p>
       </div>
    </div>
 </template>
@@ -37,13 +39,13 @@ export default {
          }
       },
       funcCheckOption(value) {
-         this.props.checkOption = value.value
+         this.$emit('update:checkOption', value.value)
+
       }
    }
 
    /*
       ! проблема с поворотом изображения
-      ? как передавать модель
    */
 }
 </script>
@@ -57,7 +59,6 @@ export default {
    width: 100%;
    margin: 0px;
    margin-bottom: 20px;
-   transition: .4s ease-in-out;
 }
 
 .label {
@@ -115,6 +116,7 @@ img {
    border: 1px solid rgba(0,0,0,0.0);
    border-top: 1px solid rgba(0,0,0,0.07);
    background: rgba(0,0,0,0.07);
+   transition: .4s ease-in-out;
 }
 
 .dropdown::-webkit-scrollbar-thumb {
@@ -134,5 +136,7 @@ img {
    background: rgba(0,0,0,0.09);
    color: #FFFEFE;
 }
-
+.test::before {
+   content: '';
+}
 </style>

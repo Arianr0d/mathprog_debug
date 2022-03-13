@@ -12,7 +12,7 @@
 export default {
    name: "formSwitch",
    props: ['labelText','value'],
-   emits: ['update:value']
+   emits: ['update:value'],
 }
 </script>
 
@@ -80,7 +80,7 @@ input:checked + .slider:before {
 }
 
 .labelText {
-   margin-left: 10px;
+   margin-left: 15px;
    font-size: 18px;
 }
 

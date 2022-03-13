@@ -65,6 +65,7 @@ export default {
 
 .group_rows input:focus {
    outline:none;
+
    background: rgba(0,0,0,0.12);
 }
 

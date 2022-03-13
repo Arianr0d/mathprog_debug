@@ -15,14 +15,30 @@
          <div class="group_row_start">
             <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability"/>
             <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability"/>
-            <div style="width: 275px">
+            <div class="widthDiv">
                <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range3'"/>
             </div>
          </div>
          <div class="group_row_start">
-            <div style="width: 275px">
+            <div class="widthDiv">
                <formDropDownList v-model:checkOption="checkTypeCross" :listName="listTypeCross" :id="'list1'"/>
             </div>
+            <formInput v-if="checkTypeCross == 'Равномерный'" v-model:value="byteProbability" :labelText="'Вероятность наследования бита'" :validate="validZero_to_One" :textError="textErrorProbability"/>
+            <formInput style="visibility: hidden"/>
+         </div>
+         <div class="group_row_start">
+            <div class="widthDiv">            
+               <formSwtch v-model:value="toggleTypeElit" :labelText="'Добавить элиты'"/>
+            </div>
+            <formInput v-if="toggleTypeElit" v-model:value="percentElit" :labelText="'% элит'" :validate="validZero_to_One" :textError="textErrorPercent"/>
+            <formInput style="visibility: hidden"/>
+         </div>
+         <div v-if="toggleTypeElit" class="group_row_start">
+            <div class="widthDiv">            
+               <formSwtch v-model:value="toggleTypeParthenogenes" :labelText="'Добавить партеногенез'"/>
+            </div>
+            <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent"/>
+            <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber"/>
          </div>
          <div class="group_row_right">
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
@@ -37,6 +53,7 @@ import formInterval from '../components/formInterval.vue'
 import formButton from '../components/formButton.vue'
 import formRangeInput from '../components/formRangeInput.vue'
 import formDropDownList from '../components/formDropDownList.vue'
+import formSwtch from '../components/formSwitch.vue'
 
 export default {
    name: "methodGenetic",
@@ -45,7 +62,8 @@ export default {
       formInterval,
       formButton,
       formRangeInput,
-      formDropDownList
+      formDropDownList,
+      formSwtch
    },
    data() {
       return {
@@ -62,18 +80,25 @@ export default {
             {item: 2, value: 'Двуточечный'},
             {item: 3, value: 'Равномерный'}
          ],
+         byteProbability: 0.5,
+         toggleTypeElit: false,
+         toggleTypeParthenogenes: false,
+         percentElit: 0.1,
+         mutatElitProbability: 0.5,
+         countMutatGen: 1,
 
          validNumber_no_zero: /^[1-9]\d*$/,
-         validFuncString: /^.[^\s]*$/,
+         validFuncString: /^.[^\s]$/,
          validValueFloat: /^(0|[-]?[0-9]?[1-9]*[0-9]*.[0-9]|[-]?[1-9]*|[1-9][0-9]*)$/, 
          validZero_to_One: /^(0|1|0\.[0-9]*)$/,
 
          errorsForm: { funcError: false },
          
          textErrorFunc: 'Функция введена не корректно',
-         textErrorNumber: 'Число должно быть целым',
+         textErrorNumber: 'Число должно быть натуральным',
          textErrorSelectionFactor: 'Коэффициент введён неверно',
          textErrorProbability: 'Вероятность введена неверно',
+         textErrorPercent: 'Процент введён неверно',
 
          defaultLeft: -100000000,
          defaultRight: 100000000,
@@ -144,7 +169,7 @@ form {
 .group_row_start {
    display: flex;
    justify-content: space-between;
-   align-items: center;
+   align-items: flex-start;
    margin-bottom: 20px;
 }
 
@@ -177,6 +202,10 @@ img {
 .outputText, li { 
    font-size: 20px;
    color: rgba(0, 0, 0, 0.8);
+}
+
+.widthDiv {
+   width: 275px
 }
 
 </style>
