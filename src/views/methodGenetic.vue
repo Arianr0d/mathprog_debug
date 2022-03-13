@@ -34,14 +34,14 @@
          </div>
          <div class="group_row_start">
             <div class="widthDiv">            
-               <formSwtch v-model:value="toggleTypeElit" :labelText="'Добавить элиты'"/>
+               <formSwitch v-model:value="toggleTypeElit" :labelText="'Добавить элиты'"/>
             </div>
             <formInput v-if="toggleTypeElit" v-model:value="percentElit" :labelText="'% элит'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true"/>
             <formInput style="visibility: hidden"/>
          </div>
          <div v-if="toggleTypeElit" class="group_row_start">
             <div style="width: 285px">            
-               <formSwtch v-model:value="toggleTypeParthenogenes" :labelText="'Добавить партеногенез'"/>
+               <formSwitch v-model:value="toggleTypeParthenogenes" :labelText="'Добавить партеногенез'"/>
             </div>
             <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true"/>
             <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true"/>
@@ -59,7 +59,7 @@ import formInterval from '../components/formInterval.vue'
 import formButton from '../components/formButton.vue'
 import formRangeInput from '../components/formRangeInput.vue'
 import formDropDownList from '../components/formDropDownList.vue'
-import formSwtch from '../components/formSwitch.vue'
+import formSwitch from '../components/formSwitch.vue'
 
 export default {
    name: "methodGenetic",
@@ -69,7 +69,7 @@ export default {
       formButton,
       formRangeInput,
       formDropDownList,
-      formSwtch
+      formSwitch
    },
    data() {
       return {
@@ -114,6 +114,13 @@ export default {
          stringResult: '',
          resParam: {},
          result: {}
+      }
+   },
+   watch: {
+      toggleTypeElit(new_val) {
+         if(!new_val) {
+            this.toggleTypeParthenogenes = false
+         }
       }
    },
    methods: {

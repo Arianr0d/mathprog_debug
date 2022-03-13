@@ -1,7 +1,7 @@
 <template>
    <div class="group_row">
       <label class="switch">
-         <input :value="value" @input="$emit('update:value', $event.target.checked)" type="checkbox">
+         <input :value="value" @input="$emit('update:value', $event.target.checked)" type="checkbox" @change="func">
          <span class="slider round"></span>
       </label>
       <label class="labelText">{{ labelText }}</label>
