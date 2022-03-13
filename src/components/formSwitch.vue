@@ -1,7 +1,7 @@
 <template>
    <div class="group_row">
       <label class="switch">
-         <input :value="value" @input="$emit('update:value', $event.target.checked)" type="checkbox">
+         <input :value="value" @input="$emit('update:value', $event.target.checked)" type="checkbox" @change="func">
          <span class="slider round"></span>
       </label>
       <label class="labelText">{{ labelText }}</label>
@@ -12,7 +12,7 @@
 export default {
    name: "formSwitch",
    props: ['labelText','value'],
-   emits: ['update:value']
+   emits: ['update:value'],
 }
 </script>
 
@@ -80,7 +80,7 @@ input:checked + .slider:before {
 }
 
 .labelText {
-   margin-left: 10px;
+   margin-left: 15px;
    font-size: 18px;
 }
 

@@ -147,7 +147,7 @@ form {
 .group_row_start {
    display: flex;
    justify-content: flex-start;
-   align-items: center;
+   align-items: flex-start;
 }
 
 .component {
