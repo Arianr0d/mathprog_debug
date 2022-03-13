@@ -1,7 +1,7 @@
 <template>
    <form>
       <div class="group_col">
-         <div class="group_row_start">
+         <div class="group_row_">
             <img src="../assets/img/debug2.svg">
             <p class="title_name">Метод Монте-Карло</p>
          </div>
@@ -130,6 +130,10 @@ form {
    display: flex;
    justify-content: flex-start;
    flex-direction: column;
+}
+
+.group_row_ {
+   display: flex;
 }
 
 .group_res_center {
