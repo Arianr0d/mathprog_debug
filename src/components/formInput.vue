@@ -3,6 +3,10 @@
       <div class="group_rows">
          <input :value="value" @input="funcValidate" @blur="$emit('change')" v-bind:class="{error: error}" type="text">
          <label>{{ labelText }}</label>
+         <div v-if="reference" class="reference">
+            <img src="../assets/img/question.svg">
+            <span>{{ textTooltip }}</span>
+         </div>
       </div>
       <p v-if="error">{{ textError }}</p>
    </div>
@@ -12,7 +16,18 @@
 
 export default {
    name:'formInput',
-   props:['labelText','validate','textError','value','validError'],
+   props: {
+      labelText: String,
+      reference: {
+         type: Boolean,
+         default: false
+      },
+      validate: Boolean,
+      textError: String,
+      value: String,
+      validError: Boolean,
+      textTooltip: String
+   },
    emits:['update:value', 'change', 'update:validError'],
    data() {
       return {
@@ -86,6 +101,63 @@ export default {
 .form-group_rows input:focus + label {
   top: 0;
   font-size: 14px;
+}
+
+.reference {
+   position: relative;
+   display: inline-block;
+   margin: -3px 0px 0px -16px;
+   height: 27px;
+   width: 30px;
+}
+
+img {
+   height: 23px;
+   width: auto;
+}
+
+.reference span {
+   visibility: hidden;
+   width: 135px;
+   min-height: 28px;
+   background-color: #555;
+   color: #fff;
+   font-size: 14px;
+   text-align: center;
+   padding: 5px 5px;
+   border-radius: 6px;
+
+   position: absolute;
+   z-index: 1;
+   top: -8px;
+   left: 105%;
+   /*bottom: 125%;
+   left: 50%;*/
+   margin-left: 10px;
+
+   opacity: 0;
+   transition: opacity 0.3s;
+}
+
+.reference span:after {
+   content: "";
+   position: absolute;
+   top: 13px;
+   right: 100%;
+   margin-left: -6px;
+   border-width: 6px;
+   border-style: solid;
+   border-color: transparent #555 transparent transparent;
+}
+
+.reference:hover span {
+   visibility: visible;
+   opacity: 1;
+}
+
+.reference:hover img {
+   box-shadow: 0 0 7px rgba(0,0,0,0.7);
+   border-radius: 60%;
 }
 
 .error {
