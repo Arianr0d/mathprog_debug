@@ -40,11 +40,13 @@
             <formInput style="visibility: hidden" :countWidth="100"/>
          </div>
          <div v-if="toggleTypeElit" class="group_row_start">
-            <div style="width: 285px">            
+            <div style="width: 300px">            
                <formSwitch v-model:value="toggleTypeParthenogenes" :labelText="'Добавить партеногенез'"/>
             </div>
-            <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="100" style="padding-left:13px"/>
-            <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true" :countWidth="100"/>
+            <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="100" style="padding-right:13px"/>
+            <div class="widthDiv">
+               <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true" :countWidth="100"/>
+            </div>
          </div>
          <div class="group_row_right">
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
