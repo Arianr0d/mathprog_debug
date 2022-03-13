@@ -5,7 +5,7 @@
             <img src="../assets/img/debug2.svg">
             <p class="title_name">Метод имитации отжига</p>
          </div>
-         <formInput v-model:value="functionStringSA" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError"/>
+         <formInput v-model:value="functionStringSA" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError" :countWidth="100"/>
          <formInterval v-model:params="objVariablesSA"/>
          <div class="group_row_start">
             <formInput v-model:value="countPointSA" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable"/>

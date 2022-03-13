@@ -7,8 +7,8 @@
       <div v-if="openForm" class="group">
          <div v-for="value in params" :key="value.name" class="group_var">
             <label>{{ value.name }}:</label>
-            <formInput v-model:value="value.min" :validate="validNumber" :labelText="'от'" class="input"/>
-            <formInput v-model:value="value.max" :validate="validNumber" :labelText="'до'" class="input"/>
+            <formInput v-model:value="value.min" :validate="validNumber" :labelText="'от'" class="input" :countWidth="100"/>
+            <formInput v-model:value="value.max" :validate="validNumber" :labelText="'до'" class="input" :countWidth="100"/>
          </div>
       </div>
    </div>
@@ -92,6 +92,6 @@ p {
 }
 
 .input {
-   width: 150px;
+   width: 170px;
 }
 </style>
