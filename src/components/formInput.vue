@@ -172,6 +172,7 @@ img {
 
    opacity: 0;
    transition: opacity 0.3s;
+   box-shadow: 0 0 7px rgba(0,0,0,0.6);
 }
 
 .reference span:after {
