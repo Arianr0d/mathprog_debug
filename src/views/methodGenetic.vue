@@ -5,22 +5,22 @@
             <img src="../assets/img/debug2.svg">
             <p class="title_name">Генетический алгоритм</p>
          </div>
-         <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError" :countWidth="100"/>
+         <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError" :countWidth="100" :countWidthLine="100"/>
          <formInterval v-model:params="objVariables"/>
          <div class="group_row_start">
             <div class="widthDiv">
-               <formInput v-model:value="countIteration" :labelText="'Число итераций'" :validate="validNumber_no_zero" :textError="textErrorNumber" :countWidth="90"/>
+               <formInput v-model:value="countIteration" :labelText="'Число итераций'" :validate="validNumber_no_zero" :textError="textErrorNumber" :countWidth="100" :countWidthLine="99.95"/>
             </div>
             <div class="widthDiv">
-               <formInput v-model:value="sizeStartPopulation" :labelText="'Размер начальной популяции'" :validate="validNumber_no_zero" :textError="textErrorNumber" :countWidth="90"/>
+               <formInput v-model:value="sizeStartPopulation" :labelText="'Размер начальной популяции'" :validate="validNumber_no_zero" :textError="textErrorNumber" :countWidth="100" :countWidthLine="99.95"/>
             </div>
             <div class="widthDiv">
-               <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textError="textErrorSelectionFactor" :reference="true" :countWidth="90"/>
+               <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textError="textErrorSelectionFactor" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
             </div>
          </div>
          <div class="group_row_start">
-            <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="'Вероятность, с которой будет проводиться скрещивание особей'" :countWidth="90"/>
-            <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="100"/>
+            <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="'Вероятность, с которой будет проводиться скрещивание особей'" :countWidth="90" :countWidthLine="95.65"/>
+            <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
             <div class="widthDiv">
                <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range3'"/>
             </div>
@@ -29,23 +29,23 @@
             <div class="widthDiv">
                <formDropDownList v-model:checkOption="checkTypeCross" :listName="listTypeCross" :id="'list1'"/>
             </div>
-            <formInput v-if="checkTypeCross == 'Равномерный'" v-model:value="byteProbability" :labelText="'Вероятность наследования бита'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="100" style="padding-left:13px"/>
+            <formInput v-if="checkTypeCross == 'Равномерный'" v-model:value="byteProbability" :labelText="'Вероятность наследования бита'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="90" :countWidthLine="95.55" style="padding-left:13px"/>
             <formInput style="visibility: hidden"/>
          </div>
          <div class="group_row_start">
             <div class="widthDiv">            
                <formSwitch v-model:value="toggleTypeElit" :labelText="'Добавить элиты'"/>
             </div>
-            <formInput v-if="toggleTypeElit" v-model:value="percentElit" :labelText="'% элит'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="100" style="padding-left:13px"/>
+            <formInput v-if="toggleTypeElit" v-model:value="percentElit" :labelText="'% элит'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="90" style="padding-left:13px" :countWidthLine="95.65"/>
             <formInput style="visibility: hidden" :countWidth="100"/>
          </div>
          <div v-if="toggleTypeElit" class="group_row_start">
             <div style="width: 300px">            
                <formSwitch v-model:value="toggleTypeParthenogenes" :labelText="'Добавить партеногенез'"/>
             </div>
-            <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="100" style="padding-right:13px"/>
+            <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="90" :countWidthLine="95.65" style="padding-right:13px"/>
             <div class="widthDiv">
-               <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true" :countWidth="100"/>
+               <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
             </div>
          </div>
          <div class="group_row_right">
@@ -127,7 +127,15 @@ export default {
    },
    methods: {
       clickButton() {
+         /*let options = {
+            func: this.functionString,
+            params: this.objVariables,
+            iterations: this.countIteration,
+            sizePopulation: this.sizeStartPopulation,
+            selectionCoef: this.selectionFactor,
 
+         }
+         console.log(options)*/
       },
       /*
         TODO: поиск переменных функции при смене фокуса

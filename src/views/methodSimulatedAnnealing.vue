@@ -5,15 +5,15 @@
             <img src="../assets/img/debug2.svg">
             <p class="title_name">Метод имитации отжига</p>
          </div>
-         <formInput v-model:value="functionStringSA" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError" :countWidth="100"/>
+         <formInput v-model:value="functionStringSA" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError" :countWidth="100" :countWidthLine="100"/>
          <formInterval v-model:params="objVariablesSA"/>
          <div class="group_row_start">
-            <formInput v-model:value="countPointSA" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable"/>
-            <formInput v-model:value="countTemperatureSA" :labelText="'Температура'" :validate="validValueFloat" :textError="textErrorTemperature"/>
-            <formInput v-model:value="countReductionTempSA" :labelText="'Коэфициент снижения температуры'" :validate="validReductionTempSA" :textError="textErrorReductionTempSA"/>
+            <formInput v-model:value="countPointSA" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable" :countWidth="100" :countWidthLine="99.95"/>
+            <formInput v-model:value="countTemperatureSA" :labelText="'Температура'" :validate="validValueFloat" :textError="textErrorTemperature" :countWidth="100" :countWidthLine="99.95"/>
+            <formInput v-model:value="countReductionTempSA" :labelText="'Коэфициент снижения температуры'" :validate="validReductionTempSA" :textError="textErrorReductionTempSA" :countWidth="100" :countWidthLine="99.95"/>
          </div>
          <div class="group_row_start">
-            <formInput v-model:value="epsilon" :labelText="'Окрестность для выбора точек'" :validate="validReductionTempSA" :textError="textErrorEpsilon"/>
+            <formInput v-model:value="epsilon" :labelText="'Окрестность для выбора точек'" :validate="validReductionTempSA" :textError="textErrorEpsilon" :countWidth="100" :countWidthLine="99.95"/>
             <formRangeInput v-model:value="valuePrecisionSA" :minVal="0" :maxVal="15" :step="1" :id="'range2'"/>
             <formInput style="visibility: hidden"/>
          </div>

@@ -8,6 +8,7 @@
             <span>{{ textTooltip }}</span>
          </div>
       </div>
+      <a v-bind:style="'--width:'+countWidthLine+'%'"></a>
       <p v-if="error">{{ textError }}</p>
    </div>
 </template>
@@ -27,7 +28,8 @@ export default {
       value: String,
       validError: Boolean,
       textTooltip: String,
-      countWidth: String
+      countWidth: String,
+      countWidthLine: String
    },
    emits:['update:value', 'change', 'update:validError'],
    data() {
@@ -75,14 +77,46 @@ export default {
    height: 30px;
 }
 
+a {
+   display: inline-block;
+   color: transparent;
+   text-decoration: none;
+   position: relative;
+   width: var(--width);
+   margin-top: -2px;
+}
+
+
+a:after {
+    display: block;
+    content: "";
+    background-color: #fa7014;
+    height: 2px;
+    width: 0%;
+    left: 50%;
+    position: absolute;
+    -webkit-transition: width .4s ease-in-out;
+    -moz--transition: width .4s ease-in-out;
+    transition: width .4s ease-in-out;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.group_rows:hover + a:after {
+    width: 100%;
+}
+
+
 .group_rows input:hover {
    background: rgba(0,0,0,0.09);
 }
 
 .group_rows input:focus {
    outline:none;
-
    background: rgba(0,0,0,0.12);
+   border-bottom-color: #fa7014;
+   border-bottom-width: 2px;
 }
 
 .group_rows label {
