@@ -7,8 +7,10 @@
       <div v-if="openForm" class="group">
          <div v-for="value in params" :key="value.name" class="group_var">
             <label>{{ value.name }}:</label>
-            <formInput v-model:value="value.min" :validate="validNumber" :labelText="'от'" class="input" :countWidth="100" :countWidthLine="99.95"/>
-            <formInput v-model:value="value.max" :validate="validNumber" :labelText="'до'" class="input" :countWidth="100" :countWidthLine="99.95"/>
+            <div class="group__column">
+               <formInput v-model:value="value.min" :validate="validNumber" :labelText="'от'" class="input" :countWidth="100" :countWidthLine="99.95"/>
+               <formInput v-model:value="value.max" :validate="validNumber" :labelText="'до'" class="input" :countWidth="100" :countWidthLine="99.95"/>
+            </div>
          </div>
       </div>
    </div>
@@ -38,7 +40,7 @@ export default {
    transition: .4s ease-in-out;
 }
 .openForm {
-   margin: 10px 0 40px 0;
+   margin: 20px 0 20px 0;
    border: 1px solid rgba(0, 0, 0, 0.3);
    border-radius: 5px 5px 0 0;
    box-shadow: 0 0 5px rgba(0,0,0,0.04);
@@ -54,7 +56,8 @@ export default {
 
 .group_top {
    display: flex;
-   width: 280px;
+   justify-content: flex-start;
+   width: 100%;
    cursor: pointer;
 }
 
@@ -74,11 +77,16 @@ img {
 .group_var {
    display: flex;
    align-items: flex-start;
+   justify-content: center;
    margin-top: 20px;
 }
 
 .group_var label, .input {
    margin-right: 20px;
+}
+
+.group__column {
+   display: flex;
 }
 
 label {
@@ -92,6 +100,15 @@ p {
 }
 
 .input {
-   width: 170px;
+   max-width: 170px;
+}
+
+@media (max-width: 600px) {
+   .group__column {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+   }
 }
 </style>

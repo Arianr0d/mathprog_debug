@@ -12,8 +12,6 @@
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld.vue';
-//import methodMonte_Carlo from './views/methodMonte_Carlo.vue';
 
 export default {
   name: 'App'
@@ -34,7 +32,7 @@ button {
    border: none; 
    outline: none;
    background: white;
-   margin: 0px 20px 10px 0px;
+   margin: 0px 20px 10px 20px;
    padding: 10px 15px;
    font-size: 18px;
    color: rgba(0,0,0,0.8);
