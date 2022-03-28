@@ -153,7 +153,11 @@ export default {
 <style scoped>
 
 form {
-   margin: auto 15vw;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 64%;
+   margin: 0px auto;
    padding: 1vw 3vw 5vw 3vw;
    background: #fff;
    box-shadow: 0 0 5px rgba(0,0,0,0.5);
@@ -223,13 +227,18 @@ img {
    margin-top: -65px;
 }
 
-@media (max-width: 380px) {
+@media (max-width: 350px) {
    form {
       min-width: 280px;
    }
 }
 
 @media (max-width: 650px) {
+   form {
+      width: 85%;
+      padding: 1vw 10vw 10vw 10vw;
+   }
+
    .component {
       margin: 0 0px 15px 0;
       width: 100%;
@@ -238,8 +247,8 @@ img {
 
 @media (max-width: 900px) {
    form {
-      margin: auto 7vw;
-      padding: 1vw 5vw 5vw 5vw;
+      width: 70%;
+      padding: 1vw 10vw 10vw 10vw;
    }
 }
 
