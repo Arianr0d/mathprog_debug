@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import GeneticALg from '../functions/GeneticAlgorithm.js'
 import formInput from '../components/formInput.vue'
 import formInterval from '../components/formInterval.vue'
 import formButton from '../components/formButton.vue'
@@ -184,9 +185,8 @@ export default {
             MutationGenCount: this.countMutatGen,
             pres: this.valuePrecision
          }
-         console.log(options)
 
-         let res =  "Генетический алгоритм"//Simulated_annealing(options)
+         let res =  GeneticALg(options)
          this.openFormResult = true;
          this.result = res;
 

@@ -1,10 +1,10 @@
-import { create, all, e, random } from 'mathjs'
+import { create, all, random } from 'mathjs'
 
 const config = { }
 const math = create(all, config)
 
 function detech(params, pres){
-    new_params = {}
+    let new_params = {}
     for (let key in params){
         new_params[key]={min:0, max:math.round((params[key].max - params[key].min)/(math.evaluate('10^x',{x:-pres})))}
     }
@@ -51,13 +51,13 @@ function arrtoG(points){
     });
     return Gpoints;
 }
-function arrfromG(Gpoints){
+/*function arrfromG(Gpoints){
     let points = [];
     Gpoints.array.forEach(element => {
         points.push(fromG(element))
     });
     return points;
-}
+}*/
 function toval(point,options){
     let p = {}
     for(let key in point){
@@ -149,11 +149,13 @@ function mutate(point, chance, cnt){
     for (let key in point){
         let length = (point[key].toString(2).length);
         let p = math.random(cnt,0,length);
-        p.forEach(it => {it = round(it)});
+        let new_p = [];
+        p.forEach(it => {new_p.push(math.round(it))});
+        p = new_p;
         p.sort(function(a,b){return a-b});
         let a = 0;
         p.forEach(el => {
-            for(it = 0; it < el; it++){
+            for(let it = 0; it < el; it++){
                 a = a << 1;
             }
             let r = random(0,1);
