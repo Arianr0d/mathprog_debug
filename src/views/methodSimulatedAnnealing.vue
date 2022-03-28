@@ -243,4 +243,9 @@ img {
    }
 }
 
+@media (min-width: 1600px) and (max-width: 2000px) {
+   .component {
+      width: 300px;
+   }
+}
 </style>

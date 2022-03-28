@@ -4,8 +4,8 @@
          <input :value="value" @input="funcValidate" @blur="$emit('change')" v-bind:class="{error: error}" type="text" v-bind:style="'--width:'+countWidth+'%'">
          <label>{{ labelText }}</label>
          <div v-if="reference" class="reference">
-            <img src="../assets/img/question.svg">
-            <span>{{ textTooltip }}</span>
+            <img v-show="visible_ref" src="../assets/img/question.svg">
+            <span v-show="visible_ref">{{ textTooltip }}</span>
          </div>
       </div>
       <a v-bind:style="'--width:'+countWidthLine+'%'"></a>
@@ -22,6 +22,10 @@ export default {
       reference: {
          type: Boolean,
          default: false
+      },
+      visible_ref: {
+         type: Boolean,
+         default: true
       },
       validate: Boolean,
       textError: String,
@@ -166,8 +170,6 @@ img {
    z-index: 1;
    top: -8px;
    left: 105%;
-   /*bottom: 125%;
-   left: 50%;*/
    margin-left: 10px;
 
    opacity: 0;
@@ -202,5 +204,53 @@ img {
 
 .group p {
    color: rgba(255, 0, 0, 0.7);
+}
+
+@media (max-width: 900px) {
+.reference {
+   position: relative;
+   display: inline-block;
+   height: 10px;
+   width: 30px;
+}
+
+.reference span {
+   visibility: hidden;
+   width: 135px;
+   height: auto;
+   background-color: #555;
+   color: #fff;
+   font-size: 14px;
+   text-align: center;
+   padding: 5px 5px;
+   border-radius: 6px;
+
+   position: absolute;
+   z-index: 1;
+   top: 50%;
+   left: 50%;
+   margin-left: -70px;
+   margin-top: 25px; 
+
+   opacity: 0;
+   transition: opacity 0.3s;
+   box-shadow: 0 0 7px rgba(0,0,0,0.6);
+}
+
+.reference span:after {
+   content: "";
+   position: absolute;
+   left: 65%;
+   margin-top: -22px;
+   margin-left: -30px; 
+   border-width: 5px;
+   border-style: solid;
+   border-color: transparent transparent #555;
+}
+
+.reference:hover span {
+   visibility: visible;
+   opacity: 1;
+}
 }
 </style>
