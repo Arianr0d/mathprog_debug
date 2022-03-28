@@ -138,4 +138,11 @@ img {
 .test::before {
    content: '';
 }
+
+@media (min-width: 1600px) and (max-width: 2000px) {
+   .dropdown, .label {
+      margin-left: 15px;
+      width: 290px;
+   }
+}
 </style>

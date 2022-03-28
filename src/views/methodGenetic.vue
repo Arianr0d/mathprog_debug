@@ -64,6 +64,19 @@
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
          </div>
       </div>
+      <div v-if="openFormResult">
+         <div class="group_res">
+            <p class="outputText">{{ stringResult }}</p>
+         </div>
+         <div class="group_res_center">
+            <ul v-for="item in resParam" :key="item.index">
+               <li>{{item.index}} = {{ item.value }}</li>
+            </ul>
+         </div>
+         <div class="group_row_right">
+            <p class="outputText">Время работы алгоритма: {{ result.time }} мс</p>
+         </div>
+      </div>
    </form>
 </template>
 
@@ -74,6 +87,11 @@ import formButton from '../components/formButton.vue'
 import formRangeInput from '../components/formRangeInput.vue'
 import formDropDownList from '../components/formDropDownList.vue'
 import formSwitch from '../components/formSwitch.vue'
+
+import { create, all } from 'mathjs'
+
+const config = { }
+const math = create(all, config)
 
 export default {
    name: "methodGenetic",
@@ -123,9 +141,9 @@ export default {
          textErrorProbability: 'Вероятность введена неверно',
          textErrorPercent: 'Процент введён неверно',
 
-         defaultLeft: -100000000,
-         defaultRight: 100000000,
-         objVariables: {'x' : { min: -100000000, max: 100000000, name: 'x'}},
+         defaultLeft: -100,
+         defaultRight: 100,
+         objVariables: {'x' : { min: -100, max: 100, name: 'x'}},
 
          openFormResult: false,
          stringResult: '',
@@ -148,15 +166,36 @@ export default {
    },
    methods: {
       clickButton() {
-         /*let options = {
-            func: this.functionString,
-            params: this.objVariables,
-            iterations: this.countIteration,
-            sizePopulation: this.sizeStartPopulation,
-            selectionCoef: this.selectionFactor,
 
+         let options = {
+            Func: this.functionString,
+            Params: this.objVariables,
+            Iteraions: this.countIteration,
+            StartSize: this.sizeStartPopulation,
+            SelectCoef: this.selectionFactor,
+            CrossChance: this.crossProbability,
+            MutationChance: this.mutationProbability,
+            CrossType: this.checkTypeCross,
+            Bchance: this.byteProbability, 
+            Elits: this.toggleTypeElit,
+            ElitsCoef: this.percentElit,
+            ElitsP: this.toggleTypeParthenogenes,
+            MutationChanceEP: this.byteProbability,
+            MutationGenCount: this.countMutatGen,
+            pres: this.valuePrecision
          }
-         console.log(options)*/
+         console.log(options)
+
+         let res =  "Генетический алгоритм"//Simulated_annealing(options)
+         this.openFormResult = true;
+         this.result = res;
+
+         this.stringResult = 'f(';
+         for(let index in res.ans) {
+            this.resParam[index] = { value: math.round(res.ans[index], this.valuePrecision), index: index};
+            this.stringResult += index + ',';
+         } 
+         this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + math.round(res.value, this.valuePrecision);
       },
       /*
         TODO: поиск переменных функции при смене фокуса
@@ -277,6 +316,5 @@ img {
       width: 300px;
    }
 }
-
 
 </style>
