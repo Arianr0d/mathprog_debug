@@ -153,9 +153,6 @@ export default {
 <style scoped>
 
 form {
-   display: flex;
-   justify-content: center;
-   align-items: center;
    width: 64%;
    margin: 0px auto;
    padding: 1vw 3vw 5vw 3vw;
