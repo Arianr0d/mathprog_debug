@@ -7,7 +7,7 @@
          </div>
          <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError" :countWidth="100" :countWidthLine="100"/>
          <formInterval v-model:params="objVariables"/>
-         <div class="group_row_start">
+         <div class="group_row_start" v-bind:class="{ small: (width <= 900)}">
             <div class="component">
                <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable" :countWidth="100" :countWidthLine="99.95"/>
             </div>
@@ -56,6 +56,9 @@ export default{
    },
    data() {
       return {
+         width: document.documentElement.clientWidth,
+         height: document.documentElement.clientHeight,
+
          functionString: 'x^2',
          countPoint: 100,
          valuePrecision: 3,
@@ -76,6 +79,12 @@ export default{
          resParam: {},
          result: {}
       }
+   },
+   mounted() {
+      window.onresize = () => {
+         this.width = document.documentElement.clientWidth;
+         this.height = document.documentElement.clientHeight;
+      };
    },
    methods: {
       // поиск переменных функции
@@ -124,6 +133,10 @@ form {
    padding: 1vw 3vw 5vw 3vw;
    background: #fff;
    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.small {
+   flex-direction: column;
 }
 
 .group_col {
@@ -183,6 +196,26 @@ img {
 .outputText, li { 
    font-size: 20px;
    color: rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 380px) {
+   form {
+      min-width: 280px;
+   }
+}
+
+@media (max-width: 650px) {
+   .component {
+      margin: 0 0px 15px 0;
+      width: 100%;
+   }
+}
+
+@media (max-width: 900px) {
+   form {
+      margin: auto 7vw;
+      padding: 1vw 5vw 5vw 5vw;
+   }
 }
 
 </style>

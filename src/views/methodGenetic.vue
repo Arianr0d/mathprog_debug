@@ -8,43 +8,55 @@
          <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError" :countWidth="100" :countWidthLine="100"/>
          <formInterval v-model:params="objVariables"/>
          <div class="group_row_start">
-            <div class="widthDiv">
-               <formInput v-model:value="countIteration" :labelText="'Число итераций'" :validate="validNumber_no_zero" :textError="textErrorNumber" :countWidth="100" :countWidthLine="99.95"/>
+               <div class="component"> 
+                  <formInput v-model:value="countIteration" :labelText="'Число итераций'"  :validate="validNumber_no_zero" :textError="textErrorNumber"
+                  :reference="true"
+                  :visible_ref = "false"
+                  :countWidth="100" :countWidthLine="96.6"/>
+               </div>
+               <div class="component"> 
+                  <formInput v-model:value="sizeStartPopulation" :labelText="'Размер начальной популяции'" 
+                  :visible_ref = "false"
+                  :reference="true"
+                  :validate="validNumber_no_zero"   :textError="textErrorNumber" :countWidth="100" :countWidthLine="96.6"/>
+               </div>
+               <div class="component"> 
+                  <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textError="textErrorSelectionFactor" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+               </div>
+               <div class="component"> 
+                  <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="'Вероятность, с которой будет проводиться скрещивание особей'" :countWidth="90" :countWidthLine="95.65"/>
+               </div>
+               <div class="component"> 
+                  <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+               </div>
+               <div class="component">   
+                  <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range3'" style="width: 288px"/>
+               </div>
             </div>
-            <div class="widthDiv">
-               <formInput v-model:value="sizeStartPopulation" :labelText="'Размер начальной популяции'" :validate="validNumber_no_zero" :textError="textErrorNumber" :countWidth="100" :countWidthLine="99.95"/>
+         <div class="group_row_start">
+            <div class="component"> 
+               <formDropDownList v-model:checkOption="checkTypeCross" :listName="listTypeCross" :id="'list1'" v-bind:class="{ widthDiv : (width > 650)}"/>
             </div>
-            <div class="widthDiv">
-               <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textError="textErrorSelectionFactor" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+            <div class="component"> 
+               <formInput v-if="checkTypeCross == 'Равномерный'" v-model:value="byteProbability" :labelText="'Вероятность наследования бита'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="90" :countWidthLine="95.55"/>
             </div>
          </div>
          <div class="group_row_start">
-            <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="'Вероятность, с которой будет проводиться скрещивание особей'" :countWidth="90" :countWidthLine="95.65"/>
-            <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
-            <div class="widthDiv">
-               <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range3'"/>
+            <div class="component">          
+               <formSwitch v-model:value="toggleTypeElit" :labelText="'Добавить элиты'" style="margin-top: 10px"/>
             </div>
-         </div>
-         <div class="group_row_start">
-            <div class="widthDiv">
-               <formDropDownList v-model:checkOption="checkTypeCross" :listName="listTypeCross" :id="'list1'"/>
-            </div>
-            <formInput v-if="checkTypeCross == 'Равномерный'" v-model:value="byteProbability" :labelText="'Вероятность наследования бита'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="90" :countWidthLine="95.55" style="padding-left:13px"/>
-            <formInput style="visibility: hidden"/>
-         </div>
-         <div class="group_row_start">
-            <div class="widthDiv">            
-               <formSwitch v-model:value="toggleTypeElit" :labelText="'Добавить элиты'"/>
-            </div>
-            <formInput v-if="toggleTypeElit" v-model:value="percentElit" :labelText="'% элит'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="90" style="padding-left:13px" :countWidthLine="95.65"/>
-            <formInput style="visibility: hidden" :countWidth="100"/>
+            <div class="component"> 
+               <formInput v-if="toggleTypeElit" v-model:value="percentElit" :labelText="'% элит'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+            </div> 
          </div>
          <div v-if="toggleTypeElit" class="group_row_start">
-            <div style="width: 300px">            
-               <formSwitch v-model:value="toggleTypeParthenogenes" :labelText="'Добавить партеногенез'"/>
+            <div class="component">          
+               <formSwitch v-model:value="toggleTypeParthenogenes" :labelText="'Добавить партеногенез'" style="margin-top: 10px"/>
             </div>
-            <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="90" :countWidthLine="95.65" style="padding-right:13px"/>
-            <div class="widthDiv">
+            <div class="component"> 
+               <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+            </div>
+            <div class="component"> 
                <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
             </div>
          </div>
@@ -75,6 +87,9 @@ export default {
    },
    data() {
       return {
+         width: document.documentElement.clientWidth,
+         height: document.documentElement.clientHeight,
+
          functionString: 'x^2',
          countIteration: 1000,
          sizeStartPopulation: 100,
@@ -124,6 +139,12 @@ export default {
             this.toggleTypeParthenogenes = false
          }
       }
+   },
+   mounted() {
+      window.onresize = () => {
+         this.width = document.documentElement.clientWidth;
+         this.height = document.documentElement.clientHeight;
+      };
    },
    methods: {
       clickButton() {
@@ -192,12 +213,12 @@ form {
 .group_row_start {
    display: flex;
    justify-content: space-between;
+   flex-wrap: wrap;
    align-items: flex-start;
-   margin-bottom: 20px;
 }
 
 .component {
-   margin: 0 40px 10px 0;
+   margin-bottom: 20px;
 }
 
 .group_row_right {
@@ -230,5 +251,32 @@ img {
 .widthDiv {
    width: 275px
 }
+
+@media (max-width: 380px) {
+   form {
+      min-width: 280px;
+   }
+}
+
+@media (max-width: 650px) {
+   .component {
+      margin: 0 0px 15px 0;
+      width: 100%;
+   }
+}
+
+@media (max-width: 900px) {
+   form {
+      margin: auto 7vw;
+      padding: 1vw 5vw 5vw 5vw;
+   }
+}
+
+@media (min-width: 1600px) and (max-width: 2000px) {
+   .component {
+      width: 300px;
+   }
+}
+
 
 </style>
