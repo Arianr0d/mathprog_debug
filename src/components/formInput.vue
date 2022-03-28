@@ -229,7 +229,7 @@ img {
    z-index: 1;
    top: 50%;
    left: 50%;
-   margin-left: -70px;
+   margin-left: -115px;
    margin-top: 25px; 
 
    opacity: 0;
@@ -240,7 +240,7 @@ img {
 .reference span:after {
    content: "";
    position: absolute;
-   left: 65%;
+   left: 96%;
    margin-top: -22px;
    margin-left: -30px; 
    border-width: 5px;
