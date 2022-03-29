@@ -116,7 +116,7 @@ export default {
          crossProbability: 0.95,
          mutationProbability: 0.01,
          valuePrecision: 3,
-         checkTypeCross: 'Тип скрещивания',
+         checkTypeCross: 'Одноточечный',
          listTypeCross: [
             {item: 1, value: 'Одноточечный'},
             {item: 2, value: 'Двуточечный'},
