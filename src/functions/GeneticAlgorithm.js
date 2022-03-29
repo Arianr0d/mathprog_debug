@@ -209,18 +209,18 @@ function GeneticALg(options){
             dpop.push(population[it]);
         }
         let new_pop = [];
-        dpop.forEach(el1 =>{
-            dpop.forEach(el2 =>{
+        for(let k = 0; k < dpop.length-1; k++){
+            for(let kk = k+1; kk<dpop.length;kk++){
                 let r = math.random(0,1);
-                if (el1 != el2 && r < CrossChance){
-                    let opt = {arg1:el1, arg2: el2, options:Bchance}
+                if (r < CrossChance){
+                    let opt = {arg1:dpop[k], arg2: dpop[kk], options:Bchance}
                     let ans = Crossf(opt);
                     
                     new_pop.push(mutate(ans[1],MutationChance,1));
                     new_pop.push(mutate(ans[2],MutationChance,1));
                 }
-            });
-        });
+            }
+        }
         if (Elits){
             for (let it = 0; it < math.round(dpop.length*ElitsCoef); it++){
                 new_pop.push(dpop[it]);
@@ -229,7 +229,15 @@ function GeneticALg(options){
                 }
             }
         }
-        population = new_pop;
+        
+        new_pop.sort(function(a,b){
+            return evalfunkGpoint(Func,a,op) - evalfunkGpoint(Func,b,op);
+        });
+        population = []
+        for(let ttt = 0; ttt < StartSize; ttt++){
+            population.push(new_pop[ttt]);
+        }
+
     }
     population.sort(function(a,b){
         return evalfunkGpoint(Func,a,op) - evalfunkGpoint(Func,b,op);
