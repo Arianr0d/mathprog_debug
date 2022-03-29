@@ -21,23 +21,13 @@
                   :validate="validNumber_no_zero"   :textError="textErrorNumber" :countWidth="100" :countWidthLine="96.6"/>
                </div>
                <div class="component"> 
-<<<<<<< HEAD
-                  <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textTooltip="toolTipSelectCoef" :textError="textErrorSelectionFactor" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+                  <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textError="textErrorSelectionFactor" :reference="true" :textTooltip="toolTipSelectCoef" :countWidth="90" :countWidthLine="95.65"/>
                </div>
                <div class="component"> 
                   <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="toolTipCrossChance" :countWidth="90" :countWidthLine="95.65"/>
                </div>
                <div class="component"> 
                   <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="toolTipMutationChance" :countWidth="90" :countWidthLine="95.65"/>
-=======
-                  <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textError="textErrorSelectionFactor" :reference="true" :textTooltip="'Доля наиболее приспособленных особей, которая даст потомство.'" :countWidth="90" :countWidthLine="95.65"/>
-               </div>
-               <div class="component"> 
-                  <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="'Вероятность, с которой будет проводиться скрещивание особей.'" :countWidth="90" :countWidthLine="95.65"/>
-               </div>
-               <div class="component"> 
-                  <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="'Вероятность, с которой будет мутирован один случайны ген каждой особи.'" :countWidth="90" :countWidthLine="95.65"/>
->>>>>>> 1cb12f6dc30e61c889e5206d9684f7e6edab7c14
                </div>
                <div class="component">   
                   <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range3'" style="width: 288px"/>
@@ -48,11 +38,7 @@
                <formDropDownList v-model:checkOption="checkTypeCross" :listName="listTypeCross" :id="'list1'" v-bind:class="{ widthDiv : (width > 650)}"/>
             </div>
             <div class="component"> 
-<<<<<<< HEAD
                <formInput v-if="checkTypeCross == 'Равномерный'" v-model:value="byteProbability" :labelText="'Вероятность наследования бита'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="toolTipByteProbability" :countWidth="90" :countWidthLine="95.55"/>
-=======
-               <formInput v-if="checkTypeCross == 'Равномерный'" v-model:value="byteProbability" :labelText="'Вероятность наследования бита'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="'Вероятность, с которой бит 1 родителя будет передоваться 1 потомку.'" :countWidth="90" :countWidthLine="95.55"/>
->>>>>>> 1cb12f6dc30e61c889e5206d9684f7e6edab7c14
             </div>
          </div>
          <div class="group_row_start">
@@ -60,7 +46,7 @@
                <formSwitch v-model:value="toggleTypeElit" :labelText="'Добавить элиты'" style="margin-top: 10px"/>
             </div>
             <div class="component"> 
-               <formInput v-if="toggleTypeElit" v-model:value="percentElit" :labelText="'% элит'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :textTooltip="'Доля наиболее приспособленных особей из числа тех, что прошли размножение, которая перейдёт в новую популяцию без изменения.'" :countWidth="90" :countWidthLine="95.65"/>
+               <formInput v-if="toggleTypeElit" v-model:value="percentElit" :labelText="'% элит'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :textTooltip="toolTipPercentElit" :countWidth="90" :countWidthLine="95.65"/>
             </div> 
          </div>
          <div v-if="toggleTypeElit" class="group_row_start">
@@ -68,17 +54,10 @@
                <formSwitch v-model:value="toggleTypeParthenogenes" :labelText="'Добавить партеногенез'" style="margin-top: 10px"/>
             </div>
             <div class="component"> 
-<<<<<<< HEAD
                <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :textTooltip="toolTipMutationChanceEP" :countWidth="90" :countWidthLine="95.65"/>
             </div>
             <div class="component"> 
                <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true" :textTooltip="toolTipMutationGenCount" :countWidth="90" :countWidthLine="95.65"/>
-=======
-               <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :textTooltip="'Вероятность, с которой будет мутироваться 1 случайный ген клона элиты.'" :countWidth="90" :countWidthLine="95.65"/>
-            </div>
-            <div class="component"> 
-               <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true" :textTooltip="'Число генов, которые будут подвергаться мутированию с заданной вероятностью клона элиты.'" :countWidth="90" :countWidthLine="95.65"/>
->>>>>>> 1cb12f6dc30e61c889e5206d9684f7e6edab7c14
             </div>
          </div>
          <div class="group_row_right">
@@ -163,12 +142,13 @@ export default {
          textErrorProbability: 'Вероятность введена неверно',
          textErrorPercent: 'Процент введён неверно',
 
-         toolTipSelectCoef: "",
-         toolTipCrossChance: "Вероятность, с которой будет проводиться скрещивание особей",
-         toolTipMutationChance: "",
-         toolTipByteProbability: "",
-         toolTipMutationChanceEP: "",
-         toolTipMutationGenCount: "",
+         toolTipSelectCoef: "Доля наиболее приспособленных особей, которая даст потомство.",
+         toolTipCrossChance: "Вероятность, с которой будет проводиться скрещивание особей.",
+         toolTipMutationChance: "Вероятность, с которой будет мутирован один случайный ген каждой особи.",
+         toolTipByteProbability: "Вероятность, с которой бит 1 родителя будет передоваться 1 потомку.",
+         toolTipPercentElit: "Доля наиболее приспособленных особей из числа тех, что прошли размножение, которая перейдёт в новую популяцию без изменения.",
+         toolTipMutationChanceEP: "Вероятность, с которой будет мутироваться 1 случайный ген клона элиты.",
+         toolTipMutationGenCount: "Число генов, которые будут подвергаться мутированию с заданной вероятностью клона элиты.",
 
          defaultLeft: -100,
          defaultRight: 100,
