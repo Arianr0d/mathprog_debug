@@ -21,13 +21,13 @@
                   :validate="validNumber_no_zero"   :textError="textErrorNumber" :countWidth="100" :countWidthLine="96.6"/>
                </div>
                <div class="component"> 
-                  <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textError="textErrorSelectionFactor" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+                  <formInput v-model:value="selectionFactor" :labelText="'Коэфициент отбора'" :validate="validZero_to_One" :textTooltip="toolTipSelectCoef" :textError="textErrorSelectionFactor" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
                </div>
                <div class="component"> 
-                  <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="'Вероятность, с которой будет проводиться скрещивание особей'" :countWidth="90" :countWidthLine="95.65"/>
+                  <formInput v-model:value="crossProbability" :labelText="'Вероятность скрещивания'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="toolTipCrossChance" :countWidth="90" :countWidthLine="95.65"/>
                </div>
                <div class="component"> 
-                  <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+                  <formInput v-model:value="mutationProbability" :labelText="'Вероятность мутации'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="toolTipMutationChance" :countWidth="90" :countWidthLine="95.65"/>
                </div>
                <div class="component">   
                   <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range3'" style="width: 288px"/>
@@ -38,7 +38,7 @@
                <formDropDownList v-model:checkOption="checkTypeCross" :listName="listTypeCross" :id="'list1'" v-bind:class="{ widthDiv : (width > 650)}"/>
             </div>
             <div class="component"> 
-               <formInput v-if="checkTypeCross == 'Равномерный'" v-model:value="byteProbability" :labelText="'Вероятность наследования бита'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :countWidth="90" :countWidthLine="95.55"/>
+               <formInput v-if="checkTypeCross == 'Равномерный'" v-model:value="byteProbability" :labelText="'Вероятность наследования бита'" :validate="validZero_to_One" :textError="textErrorProbability" :reference="true" :textTooltip="toolTipByteProbability" :countWidth="90" :countWidthLine="95.55"/>
             </div>
          </div>
          <div class="group_row_start">
@@ -54,10 +54,10 @@
                <formSwitch v-model:value="toggleTypeParthenogenes" :labelText="'Добавить партеногенез'" style="margin-top: 10px"/>
             </div>
             <div class="component"> 
-               <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+               <formInput v-if="toggleTypeParthenogenes" v-model:value="mutatElitProbability" :labelText="'Вероятность мутации гена элиты'" :validate="validZero_to_One" :textError="textErrorPercent" :reference="true" :textTooltip="toolTipMutationChanceEP" :countWidth="90" :countWidthLine="95.65"/>
             </div>
             <div class="component"> 
-               <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true" :countWidth="90" :countWidthLine="95.65"/>
+               <formInput v-if="toggleTypeParthenogenes" v-model:value="countMutatGen" :labelText="'Число мутируемых генов'" :validate="validNumber_no_zero" :textError="textErrorNumber" :reference="true" :textTooltip="toolTipMutationGenCount" :countWidth="90" :countWidthLine="95.65"/>
             </div>
          </div>
          <div class="group_row_right">
@@ -141,6 +141,13 @@ export default {
          textErrorSelectionFactor: 'Коэффициент введён неверно',
          textErrorProbability: 'Вероятность введена неверно',
          textErrorPercent: 'Процент введён неверно',
+
+         toolTipSelectCoef: "",
+         toolTipCrossChance: "Вероятность, с которой будет проводиться скрещивание особей",
+         toolTipMutationChance: "",
+         toolTipByteProbability: "",
+         toolTipMutationChanceEP: "",
+         toolTipMutationGenCount: "",
 
          defaultLeft: -100,
          defaultRight: 100,
