@@ -46,7 +46,7 @@ function fromG(G_point){
 }
 function arrtoG(points){
     let Gpoints = [];
-    points.array.forEach(element => {
+    points.forEach(element => {
         Gpoints.push(toG(element))
     });
     return Gpoints;
@@ -148,10 +148,8 @@ function mutate(point, chance, cnt){
     let npoint = []
     for (let key in point){
         let length = (point[key].toString(2).length);
-        let p = math.random(cnt,0,length);
-        let new_p = [];
-        p.forEach(it => {new_p.push(math.round(it))});
-        p = new_p;
+        let p = [];
+        for (let it = 0; it < cnt; it++) p.push(math.round(math.random(0,length)))
         p.sort(function(a,b){return a-b});
         let a = 0;
         p.forEach(el => {
@@ -177,9 +175,9 @@ function GeneticALg(options){
     let CrossType = options.CrossType;
     let Bchance = null;
     let Crossf = null;
-    if (CrossType == 1) Crossf = onePoint;
-    if (CrossType == 2) Crossf = twoPoint;
-    if (CrossType == 3) {
+    if (CrossType == "Одноточечный") Crossf = onePoint;
+    if (CrossType == "Двуточечный") Crossf = twoPoint;
+    if (CrossType == "Равномерный") {
         Bchance = options.Bchance;
         Crossf = manyPoint;
     }
@@ -202,7 +200,7 @@ function GeneticALg(options){
 
     let population = gen_points(new_params,StartSize);
     population = arrtoG(population);
-    for(let it = 0; it < Iteraions; it++){
+    for(let i = 0; i < Iteraions; i++){
         population.sort(function(a,b){
             return evalfunkGpoint(Func,a,op) - evalfunkGpoint(Func,b,op);
         });
