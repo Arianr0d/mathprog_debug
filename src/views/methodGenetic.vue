@@ -64,6 +64,9 @@
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
          </div>
       </div>
+      <div v-if="loading">
+         <formLoader/>
+      </div>
       <div v-if="openFormResult">
          <div class="group_res">
             <p class="outputText">{{ stringResult }}</p>
@@ -88,6 +91,7 @@ import formButton from '../components/formButton.vue'
 import formRangeInput from '../components/formRangeInput.vue'
 import formDropDownList from '../components/formDropDownList.vue'
 import formSwitch from '../components/formSwitch.vue'
+import formLoader from '../components/formLoader.vue'
 
 import { create, all } from 'mathjs'
 
@@ -102,7 +106,8 @@ export default {
       formButton,
       formRangeInput,
       formDropDownList,
-      formSwitch
+      formSwitch,
+      formLoader
    },
    data() {
       return {
@@ -150,11 +155,12 @@ export default {
          toolTipMutationChanceEP: "Вероятность, с которой будет мутироваться 1 случайный ген клона элиты.",
          toolTipMutationGenCount: "Число генов, которые будут подвергаться мутированию с заданной вероятностью клона элиты.",
 
+         loading: false,
          defaultLeft: -100,
          defaultRight: 100,
          objVariables: {'x' : { min: -100, max: 100, name: 'x'}},
 
-         openFormResult: false,
+         openFormResult: true,
          stringResult: '',
          resParam: {},
          result: {}
@@ -175,7 +181,7 @@ export default {
    },
    methods: {
       clickButton() {
-
+         
          let options = {
             Func: this.functionString,
             Params: this.objVariables,
