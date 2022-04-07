@@ -155,12 +155,12 @@ export default {
          toolTipMutationChanceEP: "Вероятность, с которой будет мутироваться 1 случайный ген клона элиты.",
          toolTipMutationGenCount: "Число генов, которые будут подвергаться мутированию с заданной вероятностью клона элиты.",
 
-         loading: false,
+         loading: true,
          defaultLeft: -100,
          defaultRight: 100,
          objVariables: {'x' : { min: -100, max: 100, name: 'x'}},
 
-         openFormResult: true,
+         openFormResult: false,
          stringResult: '',
          resParam: {},
          result: {}
