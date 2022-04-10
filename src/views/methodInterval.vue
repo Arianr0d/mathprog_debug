@@ -3,22 +3,22 @@
       <div class="group_col">
          <div class="group_row_">
             <img src="../assets/img/debug2.svg">
-            <p class="title_name">Метод Монте-Карло</p>
+            <p class="title_name">Интервальный алгоритм</p>
          </div>
          <formInput v-model:value="functionString" :labelText="'Вид целевой функции'" :validate="validFuncString" :textError="textErrorFunc" @change="funcFindVariable" v-model:validError="errorsForm.funcError" :countWidth="100" :countWidthLine="100"/>
          <formInterval v-model:params="objVariables"/>
          <div class="group_row_start" v-bind:class="{ small: (width <= 900)}">
             <div class="component">
-               <formInput v-model:value="countPoint" :labelText="'Число генерируемых точек'" :validate="validNumber_no_zero" :textError="textErrorVariable" :countWidth="100" :countWidthLine="99.95"/>
+               <formInput v-model:value="epsilon" :labelText="'Минимум ширины бруса'" :validate="validValueReal" :textError="textErrorEpsilon" :countWidth="100" :countWidthLine="99.95"/>
             </div>
             <div class="component">
-               <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range1'"/>
+               <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range2'"/>
             </div>
             <div class="component">
-               <formInput style="visibility: hidden"/>
+               <formSwitch v-model:value="toggleOnMultipleOpt" :labelText="'Поиск всех оптимумов'" style="margin-top: 10px"/>
             </div>
          </div>
-         <div class="group_row_right" v-bind:class="{ margin__button: (width <= 650) }">
+         <div class="group_row_right">
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
          </div>
       </div>
@@ -43,19 +43,21 @@ import formInput from '../components/formInput.vue'
 import formButton from '../components/formButton.vue'
 import formRangeInput from '../components/formRangeInput.vue'
 import formInterval from '../components/formInterval.vue'
-import Monte_Karlo from '../functions/Monte-Karlo.js'
-import { create, all } from 'mathjs'
+import formSwitch from '../components/formSwitch.vue'
 
-const config = { }
-const math = create(all, config)
+import Simulated_annealing from '../functions/Simulated_annealing.js'
+//import { create, all } from 'mathjs'
+//const config = { }
+//const math = create(all, config)
 
-export default{
-   name: 'methodMonte_Carlo',
+export default {
+   name: "methodInterval",
    components: {
       formInput,
       formButton,
       formRangeInput,
-      formInterval
+      formInterval,
+      formSwitch
    },
    data() {
       return {
@@ -63,19 +65,23 @@ export default{
          height: document.documentElement.clientHeight,
 
          functionString: 'x^2',
-         countPoint: 100,
+         epsilon: 0.01,
          valuePrecision: 3,
-         validNumber_no_zero: /^[1-9]\d*$/,
+         toggleOnMultipleOpt: false,
+
          validFuncString: /^.[^\s]*$/,
+         validValueReal: /^(0\.[0-9]*|[1-9][0-9]*\.[0-9]*|[1-9][0-9]*)$/,
+
+         // ([1-9][0-9]*) - целое число положительное
 
          errorsForm: {funcError: false },
          
          textErrorFunc: 'Функция введена не корректно',
-         textErrorVariable: 'Количество точек должно быть целым',
+         textErrorEpsilon: 'Размер ширины введён неверно',
 
-         defaultLeft: -100000000,
-         defaultRight: 100000000,
-         objVariables: {'x' : { min: -100000000, max: 100000000, name: 'x'}},
+         defaultLeft: -100,
+         defaultRight: 100,
+         objVariables: {'x' : { min: -100, max: 100, name: 'x'}},
 
          openFormResult: false,
          stringResult: '',
@@ -90,19 +96,23 @@ export default{
       };
    },
    methods: {
-      // поиск переменных функции
       clickButton() {
-         let options = {iterations: this.countPoint, params: this.objVariables, func: this.functionString}
-         let res = Monte_Karlo(options)
-         this.openFormResult = true;
-         this.result = res;
+         let options = {
+            func: this.functionString,
+            params: this.objVariables, 
+            eps: this.epsilon,
+            onMultipleOpt: this.toggleOnMultipleOpt }
+         
+         let res = Simulated_annealing(options)
+         this.openFormResult = true
+         this.result = res
 
-         this.stringResult = 'f(';
+         /*this.stringResult = 'f(';
          for(let index in res.ans) {
             this.resParam[index] = { value: math.round(res.ans[index], this.valuePrecision), index: index};
             this.stringResult += index + ',';
          } 
-         this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + math.round(res.value, this.valuePrecision);
+         this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + math.round(res.value, this.valuePrecision);*/
       },
       /*
          TODO: поиск переменных функции при смене фокуса
@@ -151,12 +161,8 @@ form {
 
 .group_row_ {
    display: flex;
-}
-
-.group_res_center {
-   display: flex;
-   justify-content: center;
-   flex-wrap: wrap;
+   justify-content: flex-start;
+   align-items: center; 
 }
 
 .group_res {
@@ -203,10 +209,6 @@ img {
    color: rgba(0, 0, 0, 0.8);
 }
 
-.margin__button {
-   margin-top: -65px;
-}
-
 @media (max-width: 350px) {
    form {
       min-width: 280px;
@@ -232,4 +234,9 @@ img {
    }
 }
 
+@media (min-width: 1600px) and (max-width: 2000px) {
+   .component {
+      width: 300px;
+   }
+}
 </style>
