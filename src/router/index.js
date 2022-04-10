@@ -2,6 +2,7 @@ import { createWebHashHistory, createRouter } from "vue-router";
 import methodMonte_Carlo from "../views/methodMonte_Carlo.vue";
 import methodSimulatedAnnealing from "../views/methodSimulatedAnnealing.vue";
 import methodGenetic from "../views/methodGenetic.vue";
+import methodInterval from "../views/methodInterval.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/methodgenetic",
     name: "methodGenetic",
     component: methodGenetic,
+  },
+  {
+    path: "/methodinterval",
+    name: "methodInterval",
+    component: methodInterval,
   },
 ];
 

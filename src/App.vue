@@ -8,6 +8,9 @@
    <router-link to="/methodgenetic">
       <button>Генетический алгоритм</button>
    </router-link>
+   <router-link to="/methodinterval">
+      <button>Интервальный алгоритм</button>
+   </router-link>
    <router-view/>
 </template>
 

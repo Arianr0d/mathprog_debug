@@ -210,7 +210,7 @@ export default {
             this.stringResult += index + ',';
          } 
          this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + math.round(res.value, this.valuePrecision);
-      },
+      }, 
       /*
         TODO: поиск переменных функции при смене фокуса
       */
@@ -231,7 +231,7 @@ export default {
             }
          }
          this.objVariables = new_val
-      }
+      },
    }
 }
 </script>
