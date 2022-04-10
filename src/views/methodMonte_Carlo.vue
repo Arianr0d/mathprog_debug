@@ -14,8 +14,11 @@
             <div class="component">
                <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range1'"/>
             </div>
+            <div class="component">
+               <formInput style="visibility: hidden"/>
+            </div>
          </div>
-         <div class="group_row_right">
+         <div class="group_row_right" v-bind:class="{ margin__button: (width <= 650) }">
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
          </div>
       </div>
@@ -164,12 +167,13 @@ form {
 
 .group_row_start {
    display: flex;
-   justify-content: flex-start;
+   flex-wrap: wrap;
+   justify-content: space-between;
    align-items: flex-start;
 }
 
 .component {
-   margin: 0 20px 10px 0;
+   margin-bottom: 20px;
 }
 
 .group_row_right {
@@ -197,6 +201,10 @@ img {
 .outputText, li { 
    font-size: 20px;
    color: rgba(0, 0, 0, 0.8);
+}
+
+.margin__button {
+   margin-top: -65px;
 }
 
 @media (max-width: 350px) {

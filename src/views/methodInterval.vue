@@ -18,7 +18,7 @@
                <formSwitch v-model:value="toggleOnMultipleOpt" :labelText="'Поиск всех оптимумов'" style="margin-top: 10px"/>
             </div>
          </div>
-         <div class="group_row_right" v-bind:class="{ margin__button: (width <= 650) }">
+         <div class="group_row_right">
             <formButton :buttonText="'Рассчитать'" @click="clickButton"/>
          </div>
       </div>
@@ -209,10 +209,6 @@ img {
 .outputText, li { 
    font-size: 20px;
    color: rgba(0, 0, 0, 0.8);
-}
-
-.margin__button {
-   margin-top: -65px;
 }
 
 @media (max-width: 350px) {
