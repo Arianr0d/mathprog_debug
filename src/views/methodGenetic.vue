@@ -136,7 +136,6 @@ export default {
 
          validNumber_no_zero: /^[1-9]\d*$/,
          validFuncString: /^.[^\s]*$/,
-         validValueFloat: /^(0|[-]?[0-9]?[1-9]*[0-9]*.[0-9]|[-]?[1-9]*|[1-9][0-9]*)$/, 
          validZero_to_One: /^(0|1|0\.[0-9]*)$/,
 
          errorsForm: { funcError: false },

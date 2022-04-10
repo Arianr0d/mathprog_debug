@@ -70,10 +70,8 @@ export default {
          toggleOnMultipleOpt: false,
 
          validFuncString: /^.[^\s]*$/,
-         validValueReal: /^((0|([1-9]([0-9]*))).([0-9]*))$/,
-         /*
-         ! нужна проверка на то, чтобы целое число не начиналось с нуля 
-         */
+         validValueReal: /^(0\.[0-9]*|[1-9][0-9]*\.[0-9]*|[1-9][0-9]*)$/,
+
          // ([1-9][0-9]*) - целое число положительное
 
          errorsForm: {funcError: false },
