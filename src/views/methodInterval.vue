@@ -72,8 +72,6 @@ export default {
          validFuncString: /^.[^\s]*$/,
          validValueReal: /^(0\.[0-9]*|[1-9][0-9]*\.[0-9]*|[1-9][0-9]*)$/,
 
-         // ([1-9][0-9]*) - целое число положительное
-
          errorsForm: {funcError: false },
          
          textErrorFunc: 'Функция введена не корректно',

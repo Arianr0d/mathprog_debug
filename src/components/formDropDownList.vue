@@ -10,8 +10,8 @@
       </div>
       <div v-if="openSelect" class="dropdown">
          <div class="test"></div>
-         <p class="option" v-for="item in listName" :key="item.item" 
-         @click="funcCheckOption(item)">{{ item.value }}</p>
+         <p class="option" v-for="(value, item) in listName" :key="item" 
+         @click="funcCheckOption(value)">{{ value }}</p>
       </div>
    </div>
 </template>
@@ -39,7 +39,7 @@ export default {
          }
       },
       funcCheckOption(value) {
-         this.$emit('update:checkOption', value.value)
+         this.$emit('update:checkOption', value)
 
       }
    }

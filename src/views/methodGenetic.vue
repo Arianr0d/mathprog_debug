@@ -122,11 +122,7 @@ export default {
          mutationProbability: 0.01,
          valuePrecision: 3,
          checkTypeCross: 'Одноточечный',
-         listTypeCross: [
-            {item: 1, value: 'Одноточечный'},
-            {item: 2, value: 'Двуточечный'},
-            {item: 3, value: 'Равномерный'}
-         ],
+         listTypeCross: [ 'Одноточечный', 'Двуточечный', 'Равномерный'],
          byteProbability: 0.5,
          toggleTypeElit: false,
          toggleTypeParthenogenes: false,
