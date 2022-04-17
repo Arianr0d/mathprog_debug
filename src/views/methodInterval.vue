@@ -44,8 +44,7 @@ import formButton from '../components/formButton.vue'
 import formRangeInput from '../components/formRangeInput.vue'
 import formInterval from '../components/formInterval.vue'
 import formSwitch from '../components/formSwitch.vue'
-
-import Simulated_annealing from '../functions/Simulated_annealing.js'
+import SimpleMethod from '../functions/simple.js'
 //import { create, all } from 'mathjs'
 //const config = { }
 //const math = create(all, config)
@@ -103,9 +102,10 @@ export default {
             eps: this.epsilon,
             onMultipleOpt: this.toggleOnMultipleOpt }
          
-         let res = Simulated_annealing(options)
-         this.openFormResult = true
-         this.result = res
+         let res = SimpleMethod(options)
+         console.log(res)
+         //this.openFormResult = true
+         //this.result = res
 
          /*this.stringResult = 'f(';
          for(let index in res.ans) {
