@@ -18,7 +18,9 @@ const createInterval = factory('IntervalType', ['typed'], ({ typed }) => {
   IntervalType.prototype.toString = function () {
     return '[ ' + this.left + '; ' + this.right + ']';
   }
-
+  IntervalType.prototype.toString = function (pres) {
+    return '[ ' + math.round(this.left, pres) + '; ' + math.round(this.right, pres) + ']';
+  }
   // define a new data type with typed-function
   typed.addType({
     name: 'IntervalType',

@@ -103,6 +103,7 @@ export default {
             onMultipleOpt: this.toggleOnMultipleOpt }
          
          let res = SimpleMethod(options)
+         console.log(res.value.toString(this.valuePrecision))
          console.log(res)
          //this.openFormResult = true
          //this.result = res
