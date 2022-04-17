@@ -21,7 +21,6 @@ function wid(a){
 function SimpleMethod(options){
     let params = options.params;
     let func = options.func;
-    let f1 = math.derivative(func,'x')
     let e = options.eps;
     let range = genrange(params);
     let L = [range];
