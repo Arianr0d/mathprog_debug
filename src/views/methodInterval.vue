@@ -15,7 +15,7 @@
                <formRangeInput v-model:value="valuePrecision" :minVal="0" :maxVal="15" :step="1" :id="'range2'"/>
             </div>
             <div class="component">
-               <formSwitch v-model:value="toggleOnMultipleOpt" :labelText="'Поиск всех оптимумов'" style="margin-top: 10px"/>
+               <formInput style="visibility: hidden"/>
             </div>
          </div>
          <div class="group_row_right">
@@ -45,9 +45,6 @@ import formRangeInput from '../components/formRangeInput.vue'
 import formInterval from '../components/formInterval.vue'
 import formSwitch from '../components/formSwitch.vue'
 import SimpleMethod from '../functions/simple.js'
-//import { create, all } from 'mathjs'
-//const config = { }
-//const math = create(all, config)
 
 export default {
    name: "methodInterval",
@@ -66,12 +63,9 @@ export default {
          functionString: 'x^2',
          epsilon: 0.01,
          valuePrecision: 3,
-         toggleOnMultipleOpt: false,
 
          validFuncString: /^.[^\s]*$/,
          validValueReal: /^(0\.[0-9]*|[1-9][0-9]*\.[0-9]*|[1-9][0-9]*)$/,
-
-         // ([1-9][0-9]*) - целое число положительное
 
          errorsForm: {funcError: false },
          
@@ -99,21 +93,26 @@ export default {
          let options = {
             func: this.functionString,
             params: this.objVariables, 
-            eps: this.epsilon,
-            onMultipleOpt: this.toggleOnMultipleOpt }
+            eps: this.epsilon }
          
          let res = SimpleMethod(options)
          console.log(res.value.toString(this.valuePrecision))
          console.log(res)
-         //this.openFormResult = true
-         //this.result = res
+         this.openFormResult = true
+         this.result = res
 
-         /*this.stringResult = 'f(';
+         // формирование значения функции
+         this.stringResult = 'f(';
          for(let index in res.ans) {
-            this.resParam[index] = { value: math.round(res.ans[index], this.valuePrecision), index: index};
             this.stringResult += index + ',';
+         }
+         this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + res.value.toString(this.valuePrecision);
+
+         // заполнение значениями переменных
+         for(let index in res.ans) {
+            this.resParam[index] = { value: res.ans[index].toString(this.valuePrecision), index: index};
          } 
-         this.stringResult = this.stringResult.substring(0, this.stringResult.length - 1) + ') = ' + math.round(res.value, this.valuePrecision);*/
+         console.log(this.resParam)
       },
       /*
          TODO: поиск переменных функции при смене фокуса
